@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Saham Profesional v6</title>
+    <!-- Favicon Dollar Inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231d4ed8'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-size='62' font-weight='bold' fill='white' font-family='system-ui, -apple-system, sans-serif'>$</text></svg>">
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-input: #f1f5f9;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #94a3b8;
+            --border: #cbd5e1;
+            --border-light: #e2e8f0;
+            --primary: #1d4ed8;
+            --primary-dark: #0f172a;
+            --primary-light: #eff6ff;
+            --primary-border: #bfdbfe;
+            --green: #15803d;
+            --green-bg: #f0fdf4;
+            --green-border: #bbf7d0;
+            --red: #b91c1c;
+            --red-bg: #fef2f2;
+            --red-border: #fecaca;
+            --amber: #b45309;
+            --amber-bg: #fffbeb;
+            --amber-border: #fef3c7;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.4;
+            padding-bottom: 76px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px;
+        }
+
+        /* Animated Header */
+        header {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+            background-size: 200% 200%;
+            animation: headerGradient 8s ease infinite;
+            color: #ffffff;
+            padding: 12px 18px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        @keyframes headerGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            100% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .header-content {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.04);
+        }
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.725rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        /* Side Navigation Drawer */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 290px;
+            background: #ffffff;
+            z-index: 1100;
+            box-shadow: var(--shadow-lg);
+            transform: translateX(-100%);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer.active {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drawer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .drawer-menu {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .drawer-item:hover, .drawer-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .drawer-item svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .drawer-footer {
+            padding: 14px;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.775rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-align: center;
+            background: var(--bg-input);
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 4px 2px;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 2px;
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            max-width: 120px;
+            line-height: 1.1;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            margin-bottom: 2px;
+            stroke-width: 2;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: var(--primary-light);
+            font-weight: 700;
+        }
+
+        /* Panels & Layout */
+        .panel {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* Compact & Symmetrical Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-header-compact {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 6px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: -4px;
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-prefix, .input-suffix {
+            position: absolute;
+            font-size: 0.775rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            pointer-events: none;
+        }
+        .input-prefix { left: 8px; }
+        .input-suffix { right: 8px; }
+
+        input {
+            width: 100%;
+            padding: 7px 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-main);
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            outline: none;
+            transition: all 0.15s ease;
+        }
+
+        input.has-prefix { padding-left: 30px; }
+        input.has-suffix { padding-right: 30px; }
+
+        input:focus {
+            background-color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.12);
+        }
+
+        /* Results Display */
+        .res-hero {
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            border: 1px solid var(--border-light);
+            background: var(--bg-input);
+        }
+
+        .res-hero.profit {
+            background: var(--green-bg);
+            border-color: var(--green-border);
+        }
+        .res-hero.loss {
+            background: var(--red-bg);
+            border-color: var(--red-border);
+        }
+        .res-hero.neutral {
+            background: var(--primary-light);
+            border-color: var(--primary-border);
+        }
+
+        .res-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-sub);
+            margin-bottom: 2px;
+        }
+
+        .res-val {
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .res-sub {
+            font-size: 0.825rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .text-green { color: var(--green) !important; }
+        .text-red { color: var(--red) !important; }
+        .text-blue { color: var(--primary) !important; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .metric-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+        }
+
+        .metric-title {
+            font-size: 0.685rem;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        .metric-amount {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 1px;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: #f0f9ff;
+            border-left: 3px solid var(--primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 8px 10px;
+            font-size: 0.75rem;
+            color: #334155;
+            line-height: 1.35;
+        }
+
+        .note-head {
+            font-size: 0.675rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        /* Badges */
+        .badge {
+            font-size: 0.675rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-red { background: #fee2e2; color: #b91c1c; }
+        .badge-gray { background: #e2e8f0; color: #475569; }
+
+        /* Tables */
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.775rem;
+        }
+
+        .compact-table th {
+            background: var(--bg-input);
+            padding: 6px;
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compact-table td {
+            padding: 6px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.725rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-sm:hover { background: var(--bg-input); }
+        .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .btn-primary:hover { background: #1e40af; }
+        .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+        .btn-danger:hover { background: #fee2e2; }
+
+        footer {
+            text-align: center;
+            font-size: 0.725rem;
+            color: var(--text-muted);
+            padding: 12px;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANIMATED & PROMINENT HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="header-left">
+                <!-- Side Nav Trigger (3 Dots / Hamburger) -->
+                <button class="menu-btn" onclick="toggleDrawer()" title="Buka Menu Navigasi">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <circle cx="12" cy="5" r="1.5"></circle>
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="12" cy="19" r="1.5"></circle>
+                    </svg>
+                </button>
+                <div>
+                    <div class="brand-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                        Kalkulator Saham Profesional
+                    </div>
+                    <div class="brand-subtitle">Analis & Investor Equity Suite</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDE NAVIGATION DRAWER OVERLAY -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+
+    <!-- SIDE NAVIGATION DRAWER WITH FULL MENU LIST -->
+    <aside class="drawer" id="drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">Menu Kalkulator Saham</span>
+            <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+        </div>
+        <div class="drawer-menu">
+            <button class="drawer-item active" onclick="switchTab('panel-gl', 'nav-gl')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                1. Gain / Loss & Saldo Profit
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-np', 'nav-np')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                2. Modal & Profit Bersih
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-tp', 'nav-tp')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                3. Target Harga & BEP
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-avg', 'nav-avg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+                4. Average Down / Up
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-div', 'nav-div')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                5. Dividend Yield
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-ps', 'nav-ps')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                6. Position Sizing
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-rrr', 'nav-rrr')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>
+                7. Risk / Reward Ratio (RRR)
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-comp', 'nav-comp')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                8. Proyeksi Compound
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-val', 'nav-val')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                9. Valuasi PER & PBV
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-ara', 'nav-ara')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                10. Batas ARA & ARB (BEI)
+            </button>
+            <button class="drawer-item" onclick="switchTab('panel-ri', 'nav-ri')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                11. Theoretical Right Issue (HMETD)
+            </button>
+        </div>
+        <div class="drawer-footer">
+            Ridwan Budi Laksono - 2026<br>
+            <span style="font-size:0.7rem;font-weight:500;">Fee: 0,15%/0,25% (ETF jual 0,15%)</span>
+        </div>
+    </aside>
+
+    <div class="container">
+
+        <!-- 1. GAIN / LOSS PANEL -->
+        <section id="panel-gl" class="panel active">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">1. Gain / Loss & Nominal Profit (Net)</span>
+                    </div>
+                    <p class="card-desc">Hitung persentase dan nominal saldo untung/rugi bersih setelah fee broker (asumsi realisasi di harga sekarang).</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gl-buy">Harga Beli / Awal (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="gl-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcGL()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gl-current">Harga Sekarang (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="gl-current" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcGL()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gl-lots">Jumlah Pembelian (Lot)</label>
+                        <div class="input-group">
+                            <input type="number" id="gl-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcGL()">
+                            <span class="input-suffix">Lot</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gl-buy-fee">Fee Beli (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="gl-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcGL()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gl-sell-fee">Fee Jual (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="gl-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcGL()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Hasil Perhitungan Saldo Bersih</span>
+                        <span id="gl-badge" class="badge badge-gray">Impas</span>
+                    </div>
+                    <div class="res-hero neutral" id="gl-hero">
+                        <div class="res-label">Total Untung / Rugi Bersih (Rp)</div>
+                        <div class="res-val text-blue" id="gl-nominal">Rp 0</div>
+                        <div class="res-sub text-blue" id="gl-pct">Persentase: 0,00%</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Total Modal Beli (+Fee)</div>
+                            <div class="metric-amount" id="gl-out-total-buy">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Nilai Jual Bersih (-Fee)</div>
+                            <div class="metric-amount" id="gl-out-total-cur">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Fee (Beli+Jual)</div>
+                            <div class="metric-amount" id="gl-out-fees">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Jumlah Lembar Saham</div>
+                            <div class="metric-amount" id="gl-out-shares">0 Lembar</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div id="gl-note">Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh). Masukkan data untuk menghitung net profit/rugi saldo.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. NET PROFIT PANEL -->
+        <section id="panel-np" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">2. Modal & Keuntungan Bersih</span>
+                    </div>
+                    <p class="card-desc">Perhitungan hasil bersih setelah fee broker (default: Beli 0,15% | Jual 0,25%).</p>
+                    <div class="form-group">
+                        <label for="np-lots">Jumlah Pembelian (Lot)</label>
+                        <div class="input-group">
+                            <input type="number" id="np-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcNP()">
+                            <span class="input-suffix">Lot</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="np-buy-price">Harga Beli (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="np-buy-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcNP()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="np-sell-price">Harga Jual (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="np-sell-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcNP()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="np-buy-fee">Fee Beli (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="np-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcNP()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="np-sell-fee">Fee Jual (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="np-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcNP()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Rincian Bersih</span>
+                        <span id="np-badge" class="badge badge-gray">Impas Bersih</span>
+                    </div>
+                    <div class="res-hero neutral" id="np-hero">
+                        <div class="res-label">Keuntungan Bersih (Net Profit)</div>
+                        <div class="res-val text-blue" id="np-net">Rp 0</div>
+                        <div class="res-sub text-blue" id="np-roi">ROI Bersih: 0,00%</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Total Modal Beli</div>
+                            <div class="metric-amount" id="np-total-buy">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Hasil Penjualan</div>
+                            <div class="metric-amount" id="np-total-sell">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Fee Broker</div>
+                            <div class="metric-amount" id="np-total-fee">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Profit Kotor</div>
+                            <div class="metric-amount" id="np-gross">Rp 0</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Default Fee: Beli 0,15% | Jual 0,25% (termasuk PPh 0,1%). Untuk ETF, Right Issue & Warrant: Fee Jual 0,15% (tanpa PPh). Akumulasi biaya broker berpengaruh signifikan pada imbal hasil jangka panjang.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TARGET PRICE & BEP PANEL -->
+        <section id="panel-tp" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">3. Target Harga & BEP</span>
+                    </div>
+                    <p class="card-desc">Hitung harga jual minimal agar balik modal atau mencapai profit target (setelah fee default 0,15%/0,25%).</p>
+                    <div class="form-group">
+                        <label for="tp-buy">Harga Beli (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="tp-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcTP()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tp-buy-fee">Fee Beli (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="tp-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcTP()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tp-sell-fee">Fee Jual (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="tp-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcTP()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tp-target">Target Net Profit (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="tp-target" class="has-suffix" value="" placeholder="0" min="0" step="0.5" oninput="calcTP()">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Patokan Harga Eksekusi</span>
+                    </div>
+                    <div class="metric-card" style="border-left: 3px solid var(--amber); background: var(--amber-bg); padding: 10px;">
+                        <div class="metric-title" style="color: var(--amber);">HARGA BREAK EVEN (BEP)</div>
+                        <div class="metric-amount" style="font-size: 1.25rem;" id="tp-out-bep">Rp 0</div>
+                        <span style="font-size: 0.7rem; color: var(--text-sub);">Harga minimal jual agar modal tidak tergerus fee.</span>
+                    </div>
+                    <div class="metric-card" style="border-left: 3px solid var(--green); background: var(--green-bg); padding: 10px;">
+                        <div class="metric-title" style="color: var(--green);" id="tp-label-target">HARGA TARGET PROFIT (0,00%)</div>
+                        <div class="metric-amount text-green" style="font-size: 1.25rem;" id="tp-out-target">Rp 0</div>
+                        <span style="font-size: 0.7rem; color: var(--text-sub);">Harga jual wajib untuk mengamankan Net Profit target.</span>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant gunakan Fee Jual 0,15%. Jangan pernah memasang order jual persis di harga beli jika ingin balik modal secara bersih.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. AVERAGE DOWN / UP PANEL -->
+        <section id="panel-avg" class="panel">
+            <div class="card">
+                <div class="card-header-compact">
+                    <span class="card-title">4. Average Down / Average Up</span>
+                    <button class="btn-sm btn-primary" onclick="addAvgRow('', '')">+ Tambah Posisi</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="compact-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;">#</th>
+                                <th>Harga Beli (Rp)</th>
+                                <th>Jumlah (Lot)</th>
+                                <th>Total Nilai (Rp)</th>
+                                <th style="width: 40px; text-align: center;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="avg-tbody">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid-2">
+                    <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="metric-card">
+                            <div class="metric-title">Total Lot</div>
+                            <div class="metric-amount" id="avg-out-lots">0 Lot</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Lembar</div>
+                            <div class="metric-amount" id="avg-out-shares">0 Lembar</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Modal</div>
+                            <div class="metric-amount" id="avg-out-val">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <div class="res-hero neutral" id="avg-hero" style="display: flex; flex-direction: column; justify-content: center; padding: 8px 12px;">
+                        <div class="res-label">Harga Rata-Rata Baru (Average Price)</div>
+                        <div class="res-val text-blue" id="avg-out-price">Rp 0</div>
+                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="avg-out-status">Sistem Siap - Masukkan Data</div>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <div class="note-head">Catatan Analis</div>
+                    <div>Melakukan Average Down pada saham fundamental buruk hanya akan memperbesar risiko. Lakukan hanya pada bisnis berkualitas.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DIVIDEND YIELD PANEL -->
+        <section id="panel-div" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">5. Dividend Yield</span>
+                    </div>
+                    <p class="card-desc">Hitung persentase imbal hasil dividen tahunan.</p>
+                    <div class="form-group">
+                        <label for="div-price">Harga Saham Saat Ini (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="div-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcDiv()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="div-dps">Dividen per Lembar / DPS (Rp/Thn)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="div-dps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcDiv()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="div-lots">Kepemilikan Saham (Lot)</label>
+                        <div class="input-group">
+                            <input type="number" id="div-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcDiv()">
+                            <span class="input-suffix">Lot</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Hasil Dividend Yield</span>
+                        <span id="div-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="res-hero neutral" id="div-hero">
+                        <div class="res-label">Dividend Yield (Tahunan)</div>
+                        <div class="res-val text-blue" id="div-out-yield">0,00%</div>
+                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="div-out-desc">Masukkan harga saham & DPS</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Dividen / Lot</div>
+                            <div class="metric-amount" id="div-out-lot">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Cash Diterima</div>
+                            <div class="metric-amount" id="div-out-total">Rp 0</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Waspadai <i>Dividend Trap</i>. Yield tinggi karena penurunan harga saham yang tajam belum tentu menyehatkan.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. POSITION SIZING PANEL -->
+        <section id="panel-ps" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">6. Position Sizing</span>
+                    </div>
+                    <p class="card-desc">Hitung porsi lot aman berdasarkan toleransi risiko portofolio.</p>
+                    <div class="form-group">
+                        <label for="ps-capital">Total Modal Portofolio (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="ps-capital" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ps-risk">Risiko Max per Trade (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="ps-risk" class="has-suffix" value="" placeholder="2" min="0" step="0.5" oninput="calcPS()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ps-buy">Harga Beli (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="ps-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ps-sl">Harga Stop Loss / Cut Loss (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="ps-sl" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Batas Alokasi Pembelian</span>
+                        <span id="ps-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="res-hero neutral" id="ps-hero">
+                        <div class="res-label">Maksimal Pembelian Aman</div>
+                        <div class="res-val text-blue" id="ps-out-lots">0 Lot</div>
+                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="ps-out-val">Nilai: Rp 0 (0,00% Portfolio)</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Batas Toleransi Kerugian</div>
+                            <div class="metric-amount text-red" id="ps-out-risk-amt">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Risiko per Lembar</div>
+                            <div class="metric-amount text-red" id="ps-out-risk-share">Rp 0 (0,00%)</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Kunci keberlanjutan di pasar modal bukanlah seberapa sering Anda benar, tapi seberapa kecil rugi Anda saat salah.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. RISK / REWARD RATIO (RRR) -->
+        <section id="panel-rrr" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">7. Risk-to-Reward Ratio (RRR)</span>
+                    </div>
+                    <p class="card-desc">Evaluasi kelayakan rasio potensi untung vs rugi sebelum entri.</p>
+                    <div class="form-group">
+                        <label for="rrr-buy">Harga Entri / Beli (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="rrr-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rrr-sl">Harga Stop Loss (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="rrr-sl" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rrr-tp">Target Harga / TP (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="rrr-tp" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Analisis Kelayakan Trade</span>
+                        <span id="rrr-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="res-hero neutral" id="rrr-hero">
+                        <div class="res-label">Rasio Risk : Reward</div>
+                        <div class="res-val text-blue" id="rrr-out-ratio">1 : 0,00</div>
+                        <div class="res-sub text-blue" id="rrr-out-status">Masukkan parameter harga</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Potensi Kerugian (Risk)</div>
+                            <div class="metric-amount text-red" id="rrr-out-risk">Rp 0 (0,00%)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Potensi Keuntungan (Reward)</div>
+                            <div class="metric-amount text-green" id="rrr-out-reward">Rp 0 (0,00%)</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Standar trading profesional menyarankan RRR minimal 1 : 2.0 untuk menjaga ekspektansi profitabilitas jangka panjang.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. PROYEKSI COMPOUND INTEREST -->
+        <section id="panel-comp" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">8. Proyeksi Compound Capital</span>
+                    </div>
+                    <p class="card-desc">Simulasi pertumbuhan AUM portofolio investasi secara eksponensial.</p>
+                    <div class="form-group">
+                        <label for="comp-init">Modal Awal Portofolio (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="comp-init" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcComp()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comp-add">Injeksi Modal Bulanan (Top-Up Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="comp-add" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcComp()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="comp-rate">Target Return / Thn (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="comp-rate" class="has-suffix" value="" placeholder="0" min="0" step="0.5" oninput="calcComp()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comp-years">Jangka Waktu (Tahun)</label>
+                            <div class="input-group">
+                                <input type="number" id="comp-years" class="has-suffix" value="" placeholder="0" min="1" max="50" step="1" oninput="calcComp()">
+                                <span class="input-suffix">Thn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Proyeksi AUM Portofolio</span>
+                    </div>
+                    <div class="res-hero neutral" id="comp-hero">
+                        <div class="res-label">Nilai Akhir Portofolio (AUM)</div>
+                        <div class="res-val text-blue" id="comp-out-total">Rp 0</div>
+                        <div class="res-sub text-blue" id="comp-out-profit">Cuan Compound: +Rp 0</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Total Modal Disetor</div>
+                            <div class="metric-amount" id="comp-out-principal">Rp 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Bunga / Profit Berkelanjutan</div>
+                            <div class="metric-amount text-green" id="comp-out-interest">Rp 0</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div><i>Compound interest</i> adalah keajaiban ke-8 dunia. Konsistensi top-up dan return yang terukur akan melipatgandakan aset secara signifikan.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. VALUASI SAHAM (PER & PBV) -->
+        <section id="panel-val" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">9. Valuasi PER & PBV Saham</span>
+                    </div>
+                    <p class="card-desc">Uji rasio harga terhadap laba bersih dan nilai buku perusahaan.</p>
+                    <div class="form-group">
+                        <label for="val-price">Harga Saham Saat Ini (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="val-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="val-eps">Laba per Saham / EPS (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="val-eps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="val-bvps">Nilai Buku / BVPS (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="val-bvps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Metrik Valuasi Pasar</span>
+                        <span id="val-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="res-hero neutral" id="val-hero">
+                        <div class="res-label">Price to Earnings Ratio (PER)</div>
+                        <div class="res-val text-blue" id="val-out-per">0,00 x</div>
+                        <div class="res-sub text-blue" id="val-out-per-desc">Masukkan harga & EPS</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Price to Book Value (PBV)</div>
+                            <div class="metric-amount" id="val-out-pbv">0,00 x</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Earning Yield (EPS/Price)</div>
+                            <div class="metric-amount text-green" id="val-out-ey">0,00%</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Bandingkan PER dan PBV saham ini dengan rata-rata historis 5 tahunnya atau dengan industri sejenis.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. BATAS ARA & ARB BEI -->
+        <section id="panel-ara" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">10. Kalkulator ARA & ARB (BEI)</span>
+                    </div>
+                    <p class="card-desc">Batas simetris Auto Rejection Atas & Bawah sesuai regulasi Bursa Efek Indonesia.</p>
+                    <div class="form-group">
+                        <label for="ara-price">Harga Penutupan Kemarin / Closing (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="ara-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcARA()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Batas Rentang Harga Hari Ini</span>
+                        <span id="ara-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="metrics-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="metric-card" style="border-left: 3px solid var(--green); background: var(--green-bg); padding: 10px;">
+                            <div class="metric-title" style="color: var(--green);">AUTO REJECTION ATAS (ARA)</div>
+                            <div class="metric-amount text-green" style="font-size: 1.3rem;" id="ara-out-ara">Rp 0</div>
+                            <span style="font-size: 0.7rem; color: var(--text-sub);" id="ara-pct-ara">Maksimal Kenaikan: +0,00%</span>
+                        </div>
+                        <div class="metric-card" style="border-left: 3px solid var(--red); background: var(--red-bg); padding: 10px;">
+                            <div class="metric-title" style="color: var(--red);">AUTO REJECTION BAWAH (ARB)</div>
+                            <div class="metric-amount text-red" style="font-size: 1.3rem;" id="ara-out-arb">Rp 0</div>
+                            <span style="font-size: 0.7rem; color: var(--text-sub);" id="ara-pct-arb">Maksimal Penurunan: -0,00%</span>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Aturan Auto Rejection BEI</div>
+                        <div>
+                            • Rp 50 - Rp 200: Max ARA/ARB 35%<br>
+                            • Rp 200 - Rp 5.000: Max ARA/ARB 25%<br>
+                            • > Rp 5.000: Max ARA/ARB 20%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. THEORETICAL RIGHT ISSUE (HMETD) -->
+        <section id="panel-ri" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">11. Harga Teoretis Right Issue (HMETD)</span>
+                    </div>
+                    <p class="card-desc">Hitung estimasi penyesuaian harga saham pasca Cum-Date Right Issue.</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ri-cum-price">Harga Cum Date (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="ri-cum-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRI()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ri-exe-price">Harga Pelaksanaan (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-prefix">Rp</span>
+                                <input type="number" id="ri-exe-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRI()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ri-old-ratio">Rasio Saham Lama</label>
+                            <div class="input-group">
+                                <input type="number" id="ri-old-ratio" class="has-suffix" value="" placeholder="0" min="1" step="1" oninput="calcRI()">
+                                <span class="input-suffix">Saham</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ri-new-ratio">Rasio Saham Baru</label>
+                            <div class="input-group">
+                                <input type="number" id="ri-new-ratio" class="has-suffix" value="" placeholder="0" min="1" step="1" oninput="calcRI()">
+                                <span class="input-suffix"> Saham</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Perkiraan Harga Ex-Date</span>
+                        <span id="ri-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="res-hero neutral" id="ri-hero">
+                        <div class="res-label">Harga Teoretis Ex-Date</div>
+                        <div class="res-val text-blue" id="ri-out-theoretical">Rp 0</div>
+                        <div class="res-sub text-blue" id="ri-out-diff">Penyesuaian Harga: 0,00%</div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Catatan Analis</div>
+                        <div>Harga teoretis adalah harga penyesuaian pasar pada tanggal Ex-Date. Jika Anda tidak mengeksekusi HMETD, modal Anda akan mengalami dilusi.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Fee standar: Beli 0,15% | Jual 0,25% (saham). ETF/Right/Warrant: Jual 0,15% (tanpa PPh). — Dibuat untuk investor yang menghargai perhitungan yang akurat
+        </footer>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" id="nav-gl" onclick="switchTab('panel-gl', 'nav-gl')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            Gain/Loss
+        </button>
+        <button class="nav-item" id="nav-np" onclick="switchTab('panel-np', 'nav-np')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            Net Profit
+        </button>
+        <button class="nav-item" id="nav-tp" onclick="switchTab('panel-tp', 'nav-tp')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            Target/BEP
+        </button>
+        <button class="nav-item" id="nav-avg" onclick="switchTab('panel-avg', 'nav-avg')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+            Avg Down
+        </button>
+        <button class="nav-item" id="nav-div" onclick="switchTab('panel-div', 'nav-div')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Dividen
+        </button>
+        <button class="nav-item" id="nav-ps" onclick="switchTab('panel-ps', 'nav-ps')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Positioning
+        </button>
+    </nav>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // STRICT ZERO FALLBACK PARSER
+        function parseVal(id) {
+            const el = document.getElementById(id);
+            if (!el) return 0;
+            const valStr = el.value.trim();
+            if (valStr === '' || valStr === null || valStr === undefined) return 0;
+            const v = parseFloat(valStr);
+            return isNaN(v) ? 0 : v;
+        }
+
+        // Indonesian Rupiah Formatter
+        function formatIDR(val, showDecimals = false) {
+            const n = (isNaN(val) || val === null || !isFinite(val)) ? 0 : val;
+            const decimals = showDecimals ? 2 : (n % 1 !== 0 ? 2 : 0);
+            return 'Rp ' + Number(n).toLocaleString('id-ID', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+        }
+
+        // Percentage Formatter
+        function formatPct(val, showSign = false) {
+            const n = (isNaN(val) || val === null || !isFinite(val)) ? 0 : val;
+            const sign = (showSign && n > 0) ? '+' : '';
+            return sign + Number(n).toLocaleString('id-ID', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + '%';
+        }
+
+        // Side Drawer Toggle
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawerOverlay');
+            drawer.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Tab Switcher
+        function switchTab(panelId, navId) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.drawer-item').forEach(b => b.classList.remove('active'));
+
+            const targetPanel = document.getElementById(panelId);
+            if (targetPanel) targetPanel.classList.add('active');
+
+            if (navId) {
+                const navBtn = document.getElementById(navId);
+                if (navBtn) navBtn.classList.add('active');
+            }
+
+            const drawerBtns = document.querySelectorAll('.drawer-item');
+            drawerBtns.forEach(btn => {
+                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(panelId)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.getElementById('drawer').classList.remove('active');
+            document.getElementById('drawerOverlay').classList.remove('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* 1. Gain / Loss Calculation (Net after fees) */
+        function calcGL() {
+            const buy = parseVal('gl-buy');
+            const cur = parseVal('gl-current');
+            const lots = parseVal('gl-lots');
+
+            const buyFeeInput = document.getElementById('gl-buy-fee').value.trim();
+            const sellFeeInput = document.getElementById('gl-sell-fee').value.trim();
+            const buyFeePct = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
+            const sellFeePct = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
+
+            const shares = lots * 100;
+            const grossBuy = buy * shares;
+            const buyFee = grossBuy * buyFeePct;
+            const totalCost = grossBuy + buyFee;
+
+            const grossCur = cur * shares;
+            const sellFee = grossCur * sellFeePct;
+            const netProceeds = grossCur - sellFee;
+
+            const totalFees = buyFee + sellFee;
+            const netPL = netProceeds - totalCost;
+            const pct = totalCost > 0 ? (netPL / totalCost) * 100 : 0;
+
+            document.getElementById('gl-out-total-buy').textContent = formatIDR(totalCost);
+            document.getElementById('gl-out-total-cur').textContent = formatIDR(netProceeds);
+            document.getElementById('gl-out-fees').textContent = formatIDR(totalFees);
+            document.getElementById('gl-out-shares').textContent = shares.toLocaleString('id-ID') + ' Lembar';
+
+            const hero = document.getElementById('gl-hero');
+            const nominalEl = document.getElementById('gl-nominal');
+            const pctEl = document.getElementById('gl-pct');
+            const badge = document.getElementById('gl-badge');
+            const note = document.getElementById('gl-note');
+
+            if (buy === 0 && cur === 0 && lots === 0) {
+                hero.className = 'res-hero neutral';
+                nominalEl.className = 'res-val text-blue';
+                pctEl.className = 'res-sub text-blue';
+                nominalEl.textContent = 'Rp 0';
+                pctEl.textContent = 'Persentase: 0,00%';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                note.textContent = 'Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh). Masukkan data untuk menghitung net profit/rugi saldo.';
+                return;
+            }
+
+            nominalEl.textContent = (netPL >= 0 ? '+' : '') + formatIDR(netPL);
+            pctEl.textContent = 'Persentase: ' + formatPct(pct, true);
+
+            if (netPL > 0) {
+                hero.className = 'res-hero profit';
+                nominalEl.className = 'res-val text-green';
+                pctEl.className = 'res-sub text-green';
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Untung Bersih';
+                note.textContent = 'Posisi Anda saat ini untung bersih ' + formatIDR(netPL) + ' (' + formatPct(pct, true) + ') setelah fee. Total fee: ' + formatIDR(totalFees) + '.';
+            } else if (netPL < 0) {
+                hero.className = 'res-hero loss';
+                nominalEl.className = 'res-val text-red';
+                pctEl.className = 'res-sub text-red';
+                badge.className = 'badge badge-red';
+                badge.textContent = 'Rugi Bersih';
+                note.textContent = 'Posisi Anda saat ini rugi bersih ' + formatIDR(netPL) + ' (' + formatPct(pct, true) + ') setelah fee. Total fee: ' + formatIDR(totalFees) + '.';
+            } else {
+                hero.className = 'res-hero neutral';
+                nominalEl.className = 'res-val text-blue';
+                pctEl.className = 'res-sub text-blue';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Impas Bersih';
+                note.textContent = 'Setelah memperhitungkan fee, posisi Anda impas bersih.';
+            }
+        }
+
+        /* 2. Net Profit Calculation */
+        function calcNP() {
+            const lots = parseVal('np-lots');
+            const buyPrice = parseVal('np-buy-price');
+            const sellPrice = parseVal('np-sell-price');
+            
+            const buyFeeInput = document.getElementById('np-buy-fee').value.trim();
+            const sellFeeInput = document.getElementById('np-sell-fee').value.trim();
+            const buyFeePct = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
+            const sellFeePct = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
+
+            const shares = lots * 100;
+            const grossBuy = shares * buyPrice;
+            const buyFee = grossBuy * buyFeePct;
+            const totalBuy = grossBuy + buyFee;
+
+            const grossSell = shares * sellPrice;
+            const sellFee = grossSell * sellFeePct;
+            const totalSell = grossSell - sellFee;
+
+            const grossProfit = grossSell - grossBuy;
+            const totalFees = buyFee + sellFee;
+            const netProfit = totalSell - totalBuy;
+            const roi = totalBuy > 0 ? (netProfit / totalBuy) * 100 : 0;
+
+            document.getElementById('np-total-buy').textContent = formatIDR(totalBuy);
+            document.getElementById('np-total-sell').textContent = formatIDR(totalSell);
+            document.getElementById('np-total-fee').textContent = formatIDR(totalFees);
+            document.getElementById('np-gross').textContent = formatIDR(grossProfit);
+
+            const hero = document.getElementById('np-hero');
+            const netEl = document.getElementById('np-net');
+            const roiEl = document.getElementById('np-roi');
+            const badge = document.getElementById('np-badge');
+
+            if (lots === 0 && buyPrice === 0 && sellPrice === 0) {
+                hero.className = 'res-hero neutral';
+                netEl.className = 'res-val text-blue';
+                roiEl.className = 'res-sub text-blue';
+                netEl.textContent = 'Rp 0';
+                roiEl.textContent = 'ROI Bersih: 0,00%';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                return;
+            }
+
+            netEl.textContent = (netProfit >= 0 ? '+' : '') + formatIDR(netProfit);
+            roiEl.textContent = 'ROI Bersih: ' + formatPct(roi, true);
+
+            if (netProfit > 0) {
+                hero.className = 'res-hero profit';
+                netEl.className = 'res-val text-green';
+                roiEl.className = 'res-sub text-green';
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Untung Bersih';
+            } else if (netProfit < 0) {
+                hero.className = 'res-hero loss';
+                netEl.className = 'res-val text-red';
+                roiEl.className = 'res-sub text-red';
+                badge.className = 'badge badge-red';
+                badge.textContent = 'Rugi Bersih';
+            } else {
+                hero.className = 'res-hero neutral';
+                netEl.className = 'res-val text-blue';
+                roiEl.className = 'res-sub text-blue';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Impas Bersih';
+            }
+        }
+
+        /* 3. Target Price & BEP Calculation */
+        function calcTP() {
+            const buy = parseVal('tp-buy');
+            const buyFeeInput = document.getElementById('tp-buy-fee').value.trim();
+            const sellFeeInput = document.getElementById('tp-sell-fee').value.trim();
+            const buyFee = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
+            const sellFee = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
+            const targetPct = parseVal('tp-target') / 100;
+
+            const denominator = 1 - sellFee;
+            const bep = (buy > 0 && denominator > 0) ? (buy * (1 + buyFee)) / denominator : 0;
+            const targetPrice = (buy > 0 && denominator > 0) ? (buy * (1 + buyFee) * (1 + targetPct)) / denominator : 0;
+
+            document.getElementById('tp-out-bep').textContent = formatIDR(Math.ceil(bep));
+            document.getElementById('tp-out-target').textContent = formatIDR(Math.ceil(targetPrice));
+            document.getElementById('tp-label-target').textContent = 'HARGA TARGET PROFIT (' + formatPct(targetPct * 100, true) + ')';
+        }
+
+        /* 4. Average Down / Up Calculation */
+        let rowIdx = 0;
+        function addAvgRow(defaultPrice = '', defaultLot = '') {
+            rowIdx++;
+            const tbody = document.getElementById('avg-tbody');
+            const tr = document.createElement('tr');
+            tr.id = 'avg-row-' + rowIdx;
+            tr.innerHTML = `
+                <td style="font-weight:700;">#${tbody.children.length + 1}</td>
+                <td>
+                    <div class="input-group">
+                        <span class="input-prefix">Rp</span>
+                        <input type="number" class="has-prefix row-price" value="${defaultPrice}" placeholder="0" min="0" step="any" oninput="calcAvg()">
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="number" class="has-suffix row-lots" value="${defaultLot}" placeholder="0" min="0" step="1" oninput="calcAvg()">
+                        <span class="input-suffix">Lot</span>
+                    </div>
+                </td>
+                <td class="row-total" style="font-weight:700; color:var(--text-main);">
+                    Rp 0
+                </td>
+                <td style="text-align:center;">
+                    <button class="btn-sm btn-danger" onclick="removeAvgRow('${tr.id}')">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            reindexRows();
+            calcAvg();
+        }
+
+        function removeAvgRow(id) {
+            const row = document.getElementById(id);
+            if (row) {
+                row.remove();
+                reindexRows();
+                calcAvg();
+            }
+        }
+
+        function reindexRows() {
+            const rows = document.querySelectorAll('#avg-tbody tr');
+            rows.forEach((r, idx) => {
+                r.cells[0].textContent = '#' + (idx + 1);
+            });
+        }
+
+        function calcAvg() {
+            const rows = document.querySelectorAll('#avg-tbody tr');
+            let totalLots = 0;
+            let totalVal = 0;
+
+            rows.forEach(r => {
+                const priceEl = r.querySelector('.row-price');
+                const lotsEl = r.querySelector('.row-lots');
+                const price = priceEl ? (parseFloat(priceEl.value) || 0) : 0;
+                const lots = lotsEl ? (parseFloat(lotsEl.value) || 0) : 0;
+                const rowVal = price * lots * 100;
+
+                r.querySelector('.row-total').textContent = formatIDR(rowVal);
+                totalLots += lots;
+                totalVal += rowVal;
+            });
+
+            const totalShares = totalLots * 100;
+            const avgPrice = totalShares > 0 ? totalVal / totalShares : 0;
+
+            document.getElementById('avg-out-lots').textContent = totalLots.toLocaleString('id-ID') + ' Lot';
+            document.getElementById('avg-out-shares').textContent = totalShares.toLocaleString('id-ID') + ' Lembar';
+            document.getElementById('avg-out-val').textContent = formatIDR(totalVal);
+            document.getElementById('avg-out-price').textContent = formatIDR(avgPrice, true);
+
+            const status = document.getElementById('avg-out-status');
+            if (totalLots > 0 && rows.length > 1) {
+                const firstPrice = parseFloat(rows[0].querySelector('.row-price').value) || 0;
+                if (firstPrice > 0 && avgPrice < firstPrice) {
+                    status.textContent = 'Average Down: Rata-rata turun dari ' + formatIDR(firstPrice);
+                    status.className = 'res-sub text-green';
+                } else if (firstPrice > 0 && avgPrice > firstPrice) {
+                    status.textContent = 'Average Up: Rata-rata naik dari ' + formatIDR(firstPrice);
+                    status.className = 'res-sub text-blue';
+                } else {
+                    status.textContent = 'Harga rata-rata konstan';
+                    status.className = 'res-sub text-blue';
+                }
+            } else {
+                status.textContent = 'Masukkan harga & lot untuk melihat hasil';
+                status.className = 'res-sub text-blue';
+            }
+        }
+
+        /* 5. Dividend Yield Calculation */
+        function calcDiv() {
+            const price = parseVal('div-price');
+            const dps = parseVal('div-dps');
+            const lots = parseVal('div-lots');
+
+            const yieldPct = price > 0 ? (dps / price) * 100 : 0;
+            const perLot = dps * 100;
+            const totalCash = perLot * lots;
+
+            document.getElementById('div-out-yield').textContent = formatPct(yieldPct);
+            document.getElementById('div-out-lot').textContent = formatIDR(perLot);
+            document.getElementById('div-out-total').textContent = formatIDR(totalCash);
+
+            const badge = document.getElementById('div-badge');
+            const desc = document.getElementById('div-out-desc');
+            const hero = document.getElementById('div-hero');
+
+            if (price === 0 || dps === 0) {
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                desc.textContent = 'Masukkan harga saham & DPS';
+                hero.className = 'res-hero neutral';
+                return;
+            }
+
+            if (yieldPct >= 6) {
+                hero.className = 'res-hero profit';
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Sangat Attraktif';
+                desc.textContent = 'Yield tinggi (>6%). Sangat potensial untuk dividend investor.';
+            } else if (yieldPct >= 3) {
+                hero.className = 'res-hero neutral';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Moderat';
+                desc.textContent = 'Yield moderat (3%-6%). Sesuai standar rata-rata pasar.';
+            } else {
+                hero.className = 'res-hero neutral';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Rendah';
+                desc.textContent = 'Yield tergolong rendah (<3%).';
+            }
+        }
+
+        /* 6. Position Sizing Calculation */
+        function calcPS() {
+            const capital = parseVal('ps-capital');
+            const riskInput = document.getElementById('ps-risk').value.trim();
+            const riskPct = (riskInput === '' ? 2 : parseFloat(riskInput) || 0) / 100;
+            const buy = parseVal('ps-buy');
+            const sl = parseVal('ps-sl');
+
+            const maxRiskAmt = capital * riskPct;
+            const riskPerShare = buy > sl ? buy - sl : 0;
+            const riskSharePct = buy > 0 ? (riskPerShare / buy) * 100 : 0;
+
+            let maxShares = 0;
+            let maxLots = 0;
+            let totalBuyVal = 0;
+            let portPct = 0;
+
+            if (riskPerShare > 0 && capital > 0) {
+                maxShares = Math.floor(maxRiskAmt / riskPerShare);
+                maxLots = Math.floor(maxShares / 100);
+                totalBuyVal = maxLots * 100 * buy;
+                portPct = capital > 0 ? (totalBuyVal / capital) * 100 : 0;
+            }
+
+            document.getElementById('ps-out-risk-amt').textContent = formatIDR(maxRiskAmt);
+            document.getElementById('ps-out-risk-share').textContent = formatIDR(riskPerShare) + ' (' + formatPct(riskSharePct) + ')';
+            document.getElementById('ps-out-lots').textContent = maxLots.toLocaleString('id-ID') + ' Lot';
+            document.getElementById('ps-out-val').textContent = 'Nilai: ' + formatIDR(totalBuyVal) + ' (' + formatPct(portPct) + ' Portfolio)';
+
+            const badge = document.getElementById('ps-badge');
+            if (capital === 0 || buy === 0) {
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+            } else if (portPct > 100) {
+                badge.className = 'badge badge-red';
+                badge.textContent = 'Over-Leverage';
+            } else if (portPct > 50) {
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Konsentrasi Tinggi';
+            } else {
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Tergambar Aman';
+            }
+        }
+
+        /* 7. Risk-to-Reward Ratio (RRR) Calculation */
+        function calcRRR() {
+            const buy = parseVal('rrr-buy');
+            const sl = parseVal('rrr-sl');
+            const tp = parseVal('rrr-tp');
+
+            const riskShare = buy > sl ? buy - sl : 0;
+            const rewardShare = tp > buy ? tp - buy : 0;
+
+            const riskPct = buy > 0 ? (riskShare / buy) * 100 : 0;
+            const rewardPct = buy > 0 ? (rewardShare / buy) * 100 : 0;
+
+            const rrr = riskShare > 0 ? rewardShare / riskShare : 0;
+
+            document.getElementById('rrr-out-risk').textContent = formatIDR(riskShare) + ' (-' + formatPct(riskPct) + ')';
+            document.getElementById('rrr-out-reward').textContent = formatIDR(rewardShare) + ' (+' + formatPct(rewardPct) + ')';
+            document.getElementById('rrr-out-ratio').textContent = '1 : ' + Number(rrr).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            const hero = document.getElementById('rrr-hero');
+            const ratioEl = document.getElementById('rrr-out-ratio');
+            const statusEl = document.getElementById('rrr-out-status');
+            const badge = document.getElementById('rrr-badge');
+
+            if (buy === 0 || sl === 0 || tp === 0) {
+                hero.className = 'res-hero neutral';
+                ratioEl.className = 'res-val text-blue';
+                statusEl.className = 'res-sub text-blue';
+                statusEl.textContent = 'Masukkan parameter harga';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                return;
+            }
+
+            if (rrr >= 2) {
+                hero.className = 'res-hero profit';
+                ratioEl.className = 'res-val text-green';
+                statusEl.className = 'res-sub text-green';
+                statusEl.textContent = 'Potensi Profit ' + Number(rrr).toFixed(1) + 'x Lipat Risiko (Sangat Layak)';
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Sangat Ideal';
+            } else if (rrr >= 1) {
+                hero.className = 'res-hero neutral';
+                ratioEl.className = 'res-val text-blue';
+                statusEl.className = 'res-sub text-blue';
+                statusEl.textContent = 'Potensi Profit Moderat (1 : ' + Number(rrr).toFixed(1) + ')';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Cukup / Moderat';
+            } else {
+                hero.className = 'res-hero loss';
+                ratioEl.className = 'res-val text-red';
+                statusEl.className = 'res-sub text-red';
+                statusEl.textContent = 'Risiko Lebih Besar dari Potensi Profit (Tidak Disarankan)';
+                badge.className = 'badge badge-red';
+                badge.textContent = 'Risiko Tinggi';
+            }
+        }
+
+        /* 8. Compound Capital Projections */
+        function calcComp() {
+            const init = parseVal('comp-init');
+            const monthly = parseVal('comp-add');
+            const rateYear = parseVal('comp-rate') / 100;
+            const years = parseVal('comp-years');
+
+            const months = years * 12;
+            const rateMonth = rateYear / 12;
+
+            let currentBalance = init;
+            let totalDeposited = init;
+
+            if (years > 0) {
+                for (let i = 0; i < months; i++) {
+                    currentBalance += monthly;
+                    totalDeposited += monthly;
+                    currentBalance *= (1 + rateMonth);
+                }
+            }
+
+            const compoundInterest = currentBalance > totalDeposited ? currentBalance - totalDeposited : 0;
+
+            document.getElementById('comp-out-total').textContent = formatIDR(currentBalance);
+            document.getElementById('comp-out-profit').textContent = 'Cuan Compound: +' + formatIDR(compoundInterest);
+            document.getElementById('comp-out-principal').textContent = formatIDR(totalDeposited);
+            document.getElementById('comp-out-interest').textContent = formatIDR(compoundInterest);
+        }
+
+        /* 9. Valuation (PER & PBV) Calculation */
+        function calcVal() {
+            const price = parseVal('val-price');
+            const eps = parseVal('val-eps');
+            const bvps = parseVal('val-bvps');
+
+            const per = eps > 0 ? price / eps : 0;
+            const pbv = bvps > 0 ? price / bvps : 0;
+            const earningYield = price > 0 ? (eps / price) * 100 : 0;
+
+            document.getElementById('val-out-per').textContent = Number(per).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' x';
+            document.getElementById('val-out-pbv').textContent = Number(pbv).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' x';
+            document.getElementById('val-out-ey').textContent = formatPct(earningYield);
+
+            const perDesc = document.getElementById('val-out-per-desc');
+            const badge = document.getElementById('val-badge');
+
+            if (price === 0 || eps === 0) {
+                perDesc.textContent = 'Masukkan harga & EPS';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                return;
+            }
+
+            perDesc.textContent = 'Laba menutup modal dalam ' + Number(per).toFixed(1) + ' tahun';
+
+            if (per > 0 && per <= 10) {
+                badge.className = 'badge badge-green';
+                badge.textContent = 'Murah / Undervalued';
+            } else if (per > 10 && per <= 20) {
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Wajar / Fair';
+            } else if (per > 20) {
+                badge.className = 'badge badge-red';
+                badge.textContent = 'Mahal / Overvalued';
+            } else {
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+            }
+        }
+
+        /* 10. ARA & ARB Calculation (IDX Rules) */
+        function calcARA() {
+            const price = parseVal('ara-price');
+            const badge = document.getElementById('ara-badge');
+
+            if (price === 0) {
+                document.getElementById('ara-out-ara').textContent = 'Rp 0';
+                document.getElementById('ara-out-arb').textContent = 'Rp 0';
+                document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +0,00%';
+                document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -0,00%';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                return;
+            }
+
+            let pct = 0.20;
+            if (price >= 50 && price <= 200) {
+                pct = 0.35;
+            } else if (price > 200 && price <= 5000) {
+                pct = 0.25;
+            } else if (price > 5000) {
+                pct = 0.20;
+            }
+
+            const rawARA = price * (1 + pct);
+            const rawARB = price * (1 - pct);
+
+            function roundTick(p, isUp) {
+                let tick = 1;
+                if (p < 200) tick = 1;
+                else if (p < 500) tick = 2;
+                else if (p < 2000) tick = 5;
+                else if (p < 5000) tick = 10;
+                else tick = 25;
+
+                return isUp ? Math.floor(p / tick) * tick : Math.ceil(p / tick) * tick;
+            }
+
+            const araPrice = roundTick(rawARA, true);
+            const arbPrice = roundTick(rawARB, false);
+
+            document.getElementById('ara-out-ara').textContent = formatIDR(araPrice);
+            document.getElementById('ara-out-arb').textContent = formatIDR(arbPrice);
+            document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +' + formatPct(pct * 100);
+            document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -' + formatPct(pct * 100);
+            
+            badge.className = 'badge badge-green';
+            badge.textContent = 'Auto Rejection Banding (' + (pct*100) + '%)';
+        }
+
+        /* 11. Right Issue Theoretical Price (HMETD) */
+        function calcRI() {
+            const cumPrice = parseVal('ri-cum-price');
+            const exePrice = parseVal('ri-exe-price');
+            const oldRatio = parseVal('ri-old-ratio');
+            const newRatio = parseVal('ri-new-ratio');
+
+            const badge = document.getElementById('ri-badge');
+            const hero = document.getElementById('ri-hero');
+
+            if (cumPrice === 0 || oldRatio === 0 || newRatio === 0) {
+                document.getElementById('ri-out-theoretical').textContent = 'Rp 0';
+                document.getElementById('ri-out-diff').textContent = 'Penyesuaian Harga: 0,00%';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                hero.className = 'res-hero neutral';
+                return;
+            }
+
+            const theoretical = ((oldRatio * cumPrice) + (newRatio * exePrice)) / (oldRatio + newRatio);
+            const diffPct = cumPrice > 0 ? ((theoretical - cumPrice) / cumPrice) * 100 : 0;
+
+            document.getElementById('ri-out-theoretical').textContent = formatIDR(Math.round(theoretical));
+            document.getElementById('ri-out-diff').textContent = 'Penyesuaian Harga: ' + formatPct(diffPct, true);
+
+            badge.className = 'badge badge-green';
+            badge.textContent = 'Rasio ' + oldRatio + ' : ' + newRatio;
+            hero.className = 'res-hero profit';
+        }
+
+        // Initialize default empty state on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            addAvgRow('', '');
+            calcGL();
+            calcNP();
+            calcTP();
+            calcDiv();
+            calcPS();
+            calcRRR();
+            calcComp();
+            calcVal();
+            calcARA();
+            calcRI();
+        });
+    </script>
+</body>
+</html>
