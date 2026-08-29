@@ -602,9 +602,9 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                 1. Gain / Loss & Saldo Profit
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-np', 'nav-np')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                2. Modal & Profit Bersih
+            <button class="drawer-item" onclick="switchTab('panel-ara', 'nav-ara')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                2. Batas ARA & ARB (BEI)
             </button>
             <button class="drawer-item" onclick="switchTab('panel-tp', 'nav-tp')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
@@ -634,13 +634,9 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
                 9. Valuasi PER & PBV
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-ara', 'nav-ara')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                10. Batas ARA & ARB (BEI)
-            </button>
             <button class="drawer-item" onclick="switchTab('panel-ri', 'nav-ri')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                11. Theoretical Right Issue (HMETD)
+                10. Theoretical Right Issue (HMETD)
             </button>
         </div>
         <div class="drawer-footer">
@@ -731,91 +727,6 @@
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
                         <div id="gl-note">Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh). Masukkan data untuk menghitung net profit/rugi saldo.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. NET PROFIT PANEL -->
-        <section id="panel-np" class="panel">
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-header-compact">
-                        <span class="card-title">2. Modal & Keuntungan Bersih</span>
-                    </div>
-                    <p class="card-desc">Perhitungan hasil bersih setelah fee broker (default: Beli 0,15% | Jual 0,25%).</p>
-                    <div class="form-group">
-                        <label for="np-lots">Jumlah Pembelian (Lot)</label>
-                        <div class="input-group">
-                            <input type="number" id="np-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcNP()">
-                            <span class="input-suffix">Lot</span>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="np-buy-price">Harga Beli (Rp)</label>
-                            <div class="input-group">
-                                <span class="input-prefix">Rp</span>
-                                <input type="number" id="np-buy-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcNP()">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="np-sell-price">Harga Jual (Rp)</label>
-                            <div class="input-group">
-                                <span class="input-prefix">Rp</span>
-                                <input type="number" id="np-sell-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcNP()">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="np-buy-fee">Fee Beli (%)</label>
-                            <div class="input-group">
-                                <input type="number" id="np-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcNP()">
-                                <span class="input-suffix">%</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="np-sell-fee">Fee Jual (%)</label>
-                            <div class="input-group">
-                                <input type="number" id="np-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcNP()">
-                                <span class="input-suffix">%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header-compact">
-                        <span class="card-title">Rincian Bersih</span>
-                        <span id="np-badge" class="badge badge-gray">Impas Bersih</span>
-                    </div>
-                    <div class="res-hero neutral" id="np-hero">
-                        <div class="res-label">Keuntungan Bersih (Net Profit)</div>
-                        <div class="res-val text-blue" id="np-net">Rp 0</div>
-                        <div class="res-sub text-blue" id="np-roi">ROI Bersih: 0,00%</div>
-                    </div>
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-title">Total Modal Beli</div>
-                            <div class="metric-amount" id="np-total-buy">Rp 0</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Hasil Penjualan</div>
-                            <div class="metric-amount" id="np-total-sell">Rp 0</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Total Fee Broker</div>
-                            <div class="metric-amount" id="np-total-fee">Rp 0</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Profit Kotor</div>
-                            <div class="metric-amount" id="np-gross">Rp 0</div>
-                        </div>
-                    </div>
-                    <div class="note-box">
-                        <div class="note-head">Catatan Analis</div>
-                        <div>Default Fee: Beli 0,15% | Jual 0,25% (termasuk PPh 0,1%). Untuk ETF, Right Issue & Warrant: Fee Jual 0,15% (tanpa PPh). Akumulasi biaya broker berpengaruh signifikan pada imbal hasil jangka panjang.</div>
                     </div>
                 </div>
             </div>
@@ -1253,20 +1164,28 @@
             </div>
         </section>
 
-        <!-- 10. BATAS ARA & ARB BEI -->
+        <!-- 2. BATAS ARA & ARB BEI -->
         <section id="panel-ara" class="panel">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header-compact">
-                        <span class="card-title">10. Kalkulator ARA & ARB (BEI)</span>
+                        <span class="card-title">2. Kalkulator ARA & ARB (BEI)</span>
                     </div>
-                    <p class="card-desc">Batas simetris Auto Rejection Atas & Bawah sesuai regulasi Bursa Efek Indonesia.</p>
+                    <p class="card-desc">Batas Auto Rejection Atas & Bawah sesuai regulasi Bursa Efek Indonesia (asimetris).</p>
                     <div class="form-group">
                         <label for="ara-price">Harga Penutupan Kemarin / Closing (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
                             <input type="number" id="ara-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcARA()">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ara-type">Jenis Pasar / Papan</label>
+                        <select id="ara-type" onchange="calcARA()" style="width:100%;padding:7px 8px;font-size:0.875rem;font-weight:600;color:var(--text-main);background-color:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);outline:none;">
+                            <option value="regular">Pasar Reguler (Papan Utama/Pengembangan/Ekonomi Baru)</option>
+                            <option value="ipo">Saham Baru IPO (Hari Pertama Perdagangan)</option>
+                            <option value="watch">Papan Pemantauan Khusus (Periodic Call Auction)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1288,23 +1207,26 @@
                         </div>
                     </div>
                     <div class="note-box">
-                        <div class="note-head">Aturan Auto Rejection BEI</div>
-                        <div>
-                            • Rp 50 - Rp 200: Max ARA/ARB 35%<br>
-                            • Rp 200 - Rp 5.000: Max ARA/ARB 25%<br>
-                            • > Rp 5.000: Max ARA/ARB 20%
+                        <div class="note-head">Aturan Auto Rejection BEI (Asimetris)</div>
+                        <div id="ara-rules-note">
+                            <strong>Pasar Reguler:</strong><br>
+                            • Rp50–Rp200: ARA +35% | ARB −15%<br>
+                            • >Rp200–Rp5.000: ARA +25% | ARB −15%<br>
+                            • >Rp5.000: ARA +20% | ARB −15%<br><br>
+                            <strong>IPO Hari Pertama:</strong> Batas 2× lipat (ARA +70%/+50%/+40% | ARB −30%)<br>
+                            <strong>Papan Pemantauan:</strong> Simetris ±10% (harga min Rp1)
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 11. THEORETICAL RIGHT ISSUE (HMETD) -->
+        <!-- 10. THEORETICAL RIGHT ISSUE (HMETD) -->
         <section id="panel-ri" class="panel">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header-compact">
-                        <span class="card-title">11. Harga Teoretis Right Issue (HMETD)</span>
+                        <span class="card-title">10. Harga Teoretis Right Issue (HMETD)</span>
                     </div>
                     <p class="card-desc">Hitung estimasi penyesuaian harga saham pasca Cum-Date Right Issue.</p>
                     <div class="form-row">
@@ -1371,9 +1293,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
             Gain/Loss
         </button>
-        <button class="nav-item" id="nav-np" onclick="switchTab('panel-np', 'nav-np')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-            Net Profit
+        <button class="nav-item" id="nav-ara" onclick="switchTab('panel-ara', 'nav-ara')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            ARA/ARB
         </button>
         <button class="nav-item" id="nav-tp" onclick="switchTab('panel-tp', 'nav-tp')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
@@ -1531,76 +1453,6 @@
                 badge.className = 'badge badge-gray';
                 badge.textContent = 'Impas Bersih';
                 note.textContent = 'Setelah memperhitungkan fee, posisi Anda impas bersih.';
-            }
-        }
-
-        /* 2. Net Profit Calculation */
-        function calcNP() {
-            const lots = parseVal('np-lots');
-            const buyPrice = parseVal('np-buy-price');
-            const sellPrice = parseVal('np-sell-price');
-            
-            const buyFeeInput = document.getElementById('np-buy-fee').value.trim();
-            const sellFeeInput = document.getElementById('np-sell-fee').value.trim();
-            const buyFeePct = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
-            const sellFeePct = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
-
-            const shares = lots * 100;
-            const grossBuy = shares * buyPrice;
-            const buyFee = grossBuy * buyFeePct;
-            const totalBuy = grossBuy + buyFee;
-
-            const grossSell = shares * sellPrice;
-            const sellFee = grossSell * sellFeePct;
-            const totalSell = grossSell - sellFee;
-
-            const grossProfit = grossSell - grossBuy;
-            const totalFees = buyFee + sellFee;
-            const netProfit = totalSell - totalBuy;
-            const roi = totalBuy > 0 ? (netProfit / totalBuy) * 100 : 0;
-
-            document.getElementById('np-total-buy').textContent = formatIDR(totalBuy);
-            document.getElementById('np-total-sell').textContent = formatIDR(totalSell);
-            document.getElementById('np-total-fee').textContent = formatIDR(totalFees);
-            document.getElementById('np-gross').textContent = formatIDR(grossProfit);
-
-            const hero = document.getElementById('np-hero');
-            const netEl = document.getElementById('np-net');
-            const roiEl = document.getElementById('np-roi');
-            const badge = document.getElementById('np-badge');
-
-            if (lots === 0 && buyPrice === 0 && sellPrice === 0) {
-                hero.className = 'res-hero neutral';
-                netEl.className = 'res-val text-blue';
-                roiEl.className = 'res-sub text-blue';
-                netEl.textContent = 'Rp 0';
-                roiEl.textContent = 'ROI Bersih: 0,00%';
-                badge.className = 'badge badge-gray';
-                badge.textContent = 'Belum Diisi';
-                return;
-            }
-
-            netEl.textContent = (netProfit >= 0 ? '+' : '') + formatIDR(netProfit);
-            roiEl.textContent = 'ROI Bersih: ' + formatPct(roi, true);
-
-            if (netProfit > 0) {
-                hero.className = 'res-hero profit';
-                netEl.className = 'res-val text-green';
-                roiEl.className = 'res-sub text-green';
-                badge.className = 'badge badge-green';
-                badge.textContent = 'Untung Bersih';
-            } else if (netProfit < 0) {
-                hero.className = 'res-hero loss';
-                netEl.className = 'res-val text-red';
-                roiEl.className = 'res-sub text-red';
-                badge.className = 'badge badge-red';
-                badge.textContent = 'Rugi Bersih';
-            } else {
-                hero.className = 'res-hero neutral';
-                netEl.className = 'res-val text-blue';
-                roiEl.className = 'res-sub text-blue';
-                badge.className = 'badge badge-gray';
-                badge.textContent = 'Impas Bersih';
             }
         }
 
@@ -1931,10 +1783,12 @@
             }
         }
 
-        /* 10. ARA & ARB Calculation (IDX Rules) */
+        /* 2. ARA & ARB Calculation (BEI Rules - Asymmetric) */
         function calcARA() {
             const price = parseVal('ara-price');
+            const type = document.getElementById('ara-type') ? document.getElementById('ara-type').value : 'regular';
             const badge = document.getElementById('ara-badge');
+            const rulesNote = document.getElementById('ara-rules-note');
 
             if (price === 0) {
                 document.getElementById('ara-out-ara').textContent = 'Rp 0';
@@ -1946,17 +1800,47 @@
                 return;
             }
 
-            let pct = 0.20;
-            if (price >= 50 && price <= 200) {
-                pct = 0.35;
-            } else if (price > 200 && price <= 5000) {
-                pct = 0.25;
-            } else if (price > 5000) {
-                pct = 0.20;
+            let araPct = 0.20;
+            let arbPct = 0.15;
+            let typeLabel = 'Reguler';
+
+            if (type === 'watch') {
+                // Papan Pemantauan Khusus - Simetris ±10%
+                araPct = 0.10;
+                arbPct = 0.10;
+                typeLabel = 'Pemantauan ±10%';
+            } else if (type === 'ipo') {
+                // IPO Hari Pertama - 2x lipat
+                if (price >= 50 && price <= 200) {
+                    araPct = 0.70;
+                    arbPct = 0.30;
+                } else if (price > 200 && price <= 5000) {
+                    araPct = 0.50;
+                    arbPct = 0.30;
+                } else {
+                    araPct = 0.40;
+                    arbPct = 0.30;
+                }
+                typeLabel = 'IPO Hari Pertama';
+            } else {
+                // Pasar Reguler - Asimetris
+                if (price >= 50 && price <= 200) {
+                    araPct = 0.35;
+                    arbPct = 0.15;
+                } else if (price > 200 && price <= 5000) {
+                    araPct = 0.25;
+                    arbPct = 0.15;
+                } else {
+                    araPct = 0.20;
+                    arbPct = 0.15;
+                }
+                typeLabel = 'Reguler';
             }
 
-            const rawARA = price * (1 + pct);
-            const rawARB = price * (1 - pct);
+            // Harga minimum untuk ARB di papan pemantauan
+            let rawARA = price * (1 + araPct);
+            let rawARB = price * (1 - arbPct);
+            if (type === 'watch' && rawARB < 1) rawARB = 1;
 
             function roundTick(p, isUp) {
                 let tick = 1;
@@ -1966,22 +1850,30 @@
                 else if (p < 5000) tick = 10;
                 else tick = 25;
 
-                return isUp ? Math.floor(p / tick) * tick : Math.ceil(p / tick) * tick;
+                // Pembulatan ke fraksi terdekat sesuai arah
+                if (isUp) {
+                    return Math.floor(p / tick) * tick;
+                } else {
+                    return Math.ceil(p / tick) * tick;
+                }
             }
 
-            const araPrice = roundTick(rawARA, true);
-            const arbPrice = roundTick(rawARB, false);
+            let araPrice = roundTick(rawARA, true);
+            let arbPrice = roundTick(rawARB, false);
+
+            // Pastikan ARB tidak di bawah 1 untuk watchlist
+            if (type === 'watch' && arbPrice < 1) arbPrice = 1;
 
             document.getElementById('ara-out-ara').textContent = formatIDR(araPrice);
             document.getElementById('ara-out-arb').textContent = formatIDR(arbPrice);
-            document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +' + formatPct(pct * 100);
-            document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -' + formatPct(pct * 100);
-            
+            document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +' + formatPct(araPct * 100);
+            document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -' + formatPct(arbPct * 100);
+
             badge.className = 'badge badge-green';
-            badge.textContent = 'Auto Rejection Banding (' + (pct*100) + '%)';
+            badge.textContent = typeLabel + ' (ARA +' + (araPct * 100) + '% / ARB -' + (arbPct * 100) + '%)';
         }
 
-        /* 11. Right Issue Theoretical Price (HMETD) */
+        /* 10. Right Issue Theoretical Price (HMETD) */
         function calcRI() {
             const cumPrice = parseVal('ri-cum-price');
             const exePrice = parseVal('ri-exe-price');
@@ -2015,7 +1907,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             addAvgRow('', '');
             calcGL();
-            calcNP();
             calcTP();
             calcDiv();
             calcPS();
