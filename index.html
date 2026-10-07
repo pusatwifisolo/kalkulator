@@ -1189,13 +1189,18 @@ footer {
 </nav>
 
 <script>
-// ===== NUMBER FORMATTER =====
+// ===== NUMBER FORMATTER (FIXED - unlimited digits) =====
 function cleanNumber(str) {
     if (!str) return '';
+    // Hanya izinkan digit dan satu koma/titik desimal
     let cleaned = str.replace(/[^\d.,]/g, '');
-    cleaned = cleaned.replace(',', '.');
+    // Ubah koma jadi titik untuk parsing
+    cleaned = cleaned.replace(/,/g, '.');
+    // Hanya satu titik desimal yang diizinkan
     const parts = cleaned.split('.');
-    if (parts.length > 2) cleaned = parts[0] + '.' + parts.slice(1).join('');
+    if (parts.length > 2) {
+        cleaned = parts[0] + '.' + parts.slice(1).join('');
+    }
     return cleaned;
 }
 
@@ -1203,33 +1208,69 @@ function formatNumber(val) {
     if (val === '' || val === null || val === undefined) return '';
     const num = parseFloat(val);
     if (isNaN(num)) return '';
-    return num.toLocaleString('id-ID', { maximumFractionDigits: 4, minimumFractionDigits: 0 });
+
+    // Pisahkan integer dan decimal
+    const str = String(val);
+    const hasDecimal = str.includes('.');
+    const [intPart, decPart] = str.split('.');
+
+    // Format bagian integer dengan titik pemisah ribuan
+    const formattedInt = Number(intPart).toLocaleString('id-ID');
+
+    if (hasDecimal) {
+        return formattedInt + ',' + (decPart || '');
+    }
+    return formattedInt;
 }
 
 function formatAndCalc(el, calcFn) {
+    // Simpan posisi cursor berdasarkan jumlah digit sebelum cursor
+    const oldValue = el.value;
     const cursorPos = el.selectionStart;
-    const oldLen = el.value.length;
+
+    // Hitung berapa digit yang ada sebelum posisi cursor
+    let digitsBeforeCursor = 0;
+    for (let i = 0; i < cursorPos; i++) {
+        if (/\d/.test(oldValue[i])) digitsBeforeCursor++;
+    }
+
+    // Bersihkan input
     let raw = cleanNumber(el.value);
 
     if (raw === '' || raw === '.') {
         el.value = '';
         el.classList.remove('has-value');
     } else {
-        const hasTrailingDecimal = raw.endsWith('.');
-        const num = parseFloat(raw);
-        if (!isNaN(num)) {
-            let formatted = formatNumber(num);
-            if (hasTrailingDecimal && !formatted.includes(',')) formatted += ',';
-            el.value = formatted;
-            el.classList.add('has-value');
+        // Format ulang
+        const formatted = formatNumber(raw);
+        el.value = formatted;
+        el.classList.add('has-value');
+
+        // Kembalikan cursor ke posisi yang benar berdasarkan jumlah digit
+        let newCursorPos = 0;
+        let digitCount = 0;
+        for (let i = 0; i < formatted.length; i++) {
+            if (/\d/.test(formatted[i])) {
+                digitCount++;
+            }
+            if (digitCount >= digitsBeforeCursor) {
+                newCursorPos = i + 1;
+                break;
+            }
+            newCursorPos = i + 1;
         }
+
+        // Jika mengetik di akhir, taruh cursor di akhir
+        if (digitsBeforeCursor >= (raw.replace(/\D/g, '').length)) {
+            newCursorPos = formatted.length;
+        }
+
+        try {
+            el.setSelectionRange(newCursorPos, newCursorPos);
+        } catch (e) {}
     }
 
-    const newLen = el.value.length;
-    const diff = newLen - oldLen;
-    const newPos = Math.max(0, cursorPos + diff);
-    try { el.setSelectionRange(newPos, newPos); } catch(e) {}
-
+    // Jalankan perhitungan
     if (typeof calcFn === 'function') calcFn();
 }
 
