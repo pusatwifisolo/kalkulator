@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Kalkulator Saham</title>
+<title>Kalkulator Saham Profesional v7.3</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231d4ed8'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-size='62' font-weight='bold' fill='white' font-family='system-ui'>$</text></svg>">
 <style>
 :root {
@@ -28,10 +28,10 @@
     --amber: #d97706;
     --amber-bg: #fffbeb;
     --amber-border: #fde68a;
-    --radius-sm: 7px;
-    --radius-md: 12px;
+    --radius-sm: 6px;
+    --radius-md: 11px;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 10px rgba(0,0,0,0.06);
+    --shadow-md: 0 3px 8px rgba(0,0,0,0.06);
     --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -41,8 +41,8 @@ body {
     font-family: var(--font-main);
     background: var(--bg-body);
     color: var(--text-main);
-    line-height: 1.35;
-    padding-bottom: 74px;
+    line-height: 1.3;
+    padding-bottom: 68px;
     -webkit-font-smoothing: antialiased;
     overscroll-behavior-y: none;
 }
@@ -50,7 +50,7 @@ body {
 .container {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 12px 12px 16px;
+    padding: 8px 10px 12px;
 }
 
 /* ===== HEADER ===== */
@@ -60,8 +60,8 @@ header {
     background-size: 200% 200%;
     animation: headerGradient 10s ease infinite;
     color: #fff;
-    padding: 11px 14px;
-    box-shadow: 0 3px 16px rgba(29,78,216,0.22);
+    padding: 9px 12px;
+    box-shadow: 0 2px 12px rgba(29,78,216,0.2);
     overflow: hidden;
 }
 @keyframes headerGradient {
@@ -89,13 +89,13 @@ header::before {
     position: relative;
     z-index: 2;
 }
-.header-left { display: flex; align-items: center; gap: 10px; }
+.header-left { display: flex; align-items: center; gap: 9px; }
 .menu-btn {
     background: rgba(255,255,255,0.14);
     border: 1px solid rgba(255,255,255,0.22);
     color: #fff;
-    width: 34px; height: 34px;
-    border-radius: 9px;
+    width: 32px; height: 32px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
@@ -103,16 +103,16 @@ header::before {
 }
 .menu-btn:hover { background: rgba(255,255,255,0.26); transform: scale(1.05); }
 .brand-title {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    display: flex; align-items: center; gap: 7px;
+    display: flex; align-items: center; gap: 6px;
 }
 .brand-subtitle {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: rgba(255,255,255,0.75);
     font-weight: 500;
-    margin-top: 1px;
+    margin-top: 0;
 }
 
 /* ===== DRAWER ===== */
@@ -127,7 +127,7 @@ header::before {
 .drawer-overlay.active { opacity: 1; visibility: visible; }
 .drawer {
     position: fixed; top: 0; left: 0; bottom: 0;
-    width: 280px; max-width: 84vw;
+    width: 270px; max-width: 84vw;
     background: #fff;
     z-index: 1100;
     box-shadow: var(--shadow-md);
@@ -137,23 +137,23 @@ header::before {
 }
 .drawer.active { transform: translateX(0); }
 .drawer-header {
-    padding: 14px 14px;
+    padding: 12px 12px;
     background: linear-gradient(135deg, #0f172a, #1e3a8a);
     color: #fff;
     display: flex; align-items: center; justify-content: space-between;
 }
-.drawer-title { font-size: 0.88rem; font-weight: 700; }
-.drawer-close { background: none; border: none; color: #fff; font-size: 1.15rem; cursor: pointer; padding: 2px 6px; }
+.drawer-title { font-size: 0.84rem; font-weight: 700; }
+.drawer-close { background: none; border: none; color: #fff; font-size: 1.1rem; cursor: pointer; padding: 2px 6px; }
 .drawer-menu {
-    padding: 10px;
+    padding: 8px;
     display: flex; flex-direction: column; gap: 2px;
     overflow-y: auto; flex: 1;
 }
 .drawer-item {
-    display: flex; align-items: center; gap: 9px;
-    padding: 9px 11px;
-    border-radius: 9px;
-    font-size: 0.78rem; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.74rem; font-weight: 600;
     color: var(--text-sub);
     border: none; background: none;
     width: 100%; text-align: left; cursor: pointer;
@@ -163,11 +163,11 @@ header::before {
     background: var(--primary-light);
     color: var(--primary);
 }
-.drawer-item svg { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; }
+.drawer-item svg { width: 15px; height: 15px; stroke-width: 2; flex-shrink: 0; }
 .drawer-footer {
-    padding: 11px;
+    padding: 10px;
     border-top: 1px solid var(--border);
-    font-size: 0.7rem; font-weight: 600;
+    font-size: 0.66rem; font-weight: 600;
     color: var(--text-sub); text-align: center;
     background: var(--bg-input);
 }
@@ -175,40 +175,40 @@ header::before {
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(255,255,255,0.94);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
     border-top: 1px solid var(--border);
     display: flex; justify-content: space-around; align-items: center;
-    padding: 5px 2px calc(5px + env(safe-area-inset-bottom));
+    padding: 4px 2px calc(4px + env(safe-area-inset-bottom));
     z-index: 1000;
-    box-shadow: 0 -3px 16px rgba(0,0,0,0.04);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
 }
 .nav-item {
     flex: 1;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 4px 2px;
+    padding: 3px 2px;
     background: none; border: none;
     color: var(--text-sub);
-    font-size: 0.58rem; font-weight: 600;
+    font-size: 0.55rem; font-weight: 600;
     cursor: pointer; transition: all 0.15s;
-    border-radius: 9px; max-width: 100px; line-height: 1.1;
+    border-radius: 8px; max-width: 96px; line-height: 1.05;
 }
-.nav-item svg { width: 18px; height: 18px; margin-bottom: 1px; stroke-width: 2; }
+.nav-item svg { width: 17px; height: 17px; margin-bottom: 1px; stroke-width: 2; }
 .nav-item:hover { color: var(--primary); background: var(--primary-light); }
 .nav-item.active { color: var(--primary); background: var(--primary-light); font-weight: 700; }
 
 /* ===== PANELS ===== */
-.panel { display: none; animation: fadeIn 0.22s ease; }
+.panel { display: none; animation: fadeIn 0.2s ease; }
 .panel.active { display: block; }
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
+    from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 11px;
+    gap: 9px;
 }
 @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
@@ -217,9 +217,9 @@ header::before {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 13px;
+    padding: 11px;
     box-shadow: var(--shadow-sm);
-    display: flex; flex-direction: column; gap: 9px;
+    display: flex; flex-direction: column; gap: 7px;
     transition: box-shadow 0.2s;
 }
 .card:hover { box-shadow: var(--shadow-md); }
@@ -227,27 +227,27 @@ header::before {
 .card-header-compact {
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border-light);
-    padding-bottom: 6px;
+    padding-bottom: 5px;
 }
 .card-title {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--text-main);
     letter-spacing: -0.01em;
 }
 .card-desc {
-    font-size: 0.7rem;
+    font-size: 0.66rem;
     color: var(--text-sub);
-    margin-top: -4px;
-    line-height: 1.35;
+    margin-top: -3px;
+    line-height: 1.3;
 }
 
 /* ===== FORMS ===== */
-.form-group { display: flex; flex-direction: column; gap: 3px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.form-group { display: flex; flex-direction: column; gap: 2px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 
 label {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     font-weight: 600;
     color: var(--text-sub);
 }
@@ -255,19 +255,19 @@ label {
 .input-group { position: relative; display: flex; align-items: center; }
 .input-prefix, .input-suffix {
     position: absolute;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
     font-weight: 600;
     pointer-events: none;
     z-index: 1;
 }
-.input-prefix { left: 9px; }
-.input-suffix { right: 9px; }
+.input-prefix { left: 8px; }
+.input-suffix { right: 8px; }
 
 input, select {
     width: 100%;
-    padding: 7px 9px;
-    font-size: 0.84rem;
+    padding: 6px 8px;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-main);
     background: var(--bg-input);
@@ -277,22 +277,17 @@ input, select {
     transition: all 0.15s;
     appearance: none;
 }
-input.has-prefix { padding-left: 30px; }
-input.has-suffix { padding-right: 32px; }
+input.has-prefix { padding-left: 28px; }
+input.has-suffix { padding-right: 30px; }
 
-/* Default gray look */
-input.num-input {
-    color: var(--text-muted);
-}
+input.num-input { color: var(--text-muted); }
 input.num-input.has-value,
-input.num-input:focus {
-    color: var(--text-main);
-}
+input.num-input:focus { color: var(--text-main); }
 
 input:focus, select:focus {
     background: #fff;
     border-color: var(--primary);
-    box-shadow: 0 0 0 2.5px rgba(29,78,216,0.11);
+    box-shadow: 0 0 0 2px rgba(29,78,216,0.1);
 }
 input::placeholder {
     color: #cbd5e1;
@@ -301,22 +296,22 @@ input::placeholder {
 
 /* ===== RESULTS ===== */
 .res-hero {
-    padding: 11px;
+    padding: 9px;
     border-radius: var(--radius-sm);
     text-align: center;
     border: 1.5px solid var(--border);
     background: var(--bg-input);
-    transition: all 0.25s ease;
+    transition: all 0.22s ease;
 }
 .res-hero.profit {
     background: var(--green-bg);
     border-color: var(--green-border);
-    animation: pulseGreen 0.55s ease;
+    animation: pulseGreen 0.5s ease;
 }
 .res-hero.loss {
     background: var(--red-bg);
     border-color: var(--red-border);
-    animation: pulseRed 0.55s ease;
+    animation: pulseRed 0.5s ease;
 }
 .res-hero.neutral {
     background: var(--primary-light);
@@ -325,34 +320,34 @@ input::placeholder {
 
 @keyframes pulseGreen {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(5,150,105,0.25); }
-    40% { transform: scale(1.025); box-shadow: 0 0 0 6px rgba(5,150,105,0); }
+    40% { transform: scale(1.02); box-shadow: 0 0 0 5px rgba(5,150,105,0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(5,150,105,0); }
 }
 @keyframes pulseRed {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220,38,38,0.25); }
-    40% { transform: scale(1.025); box-shadow: 0 0 0 6px rgba(220,38,38,0); }
+    40% { transform: scale(1.02); box-shadow: 0 0 0 5px rgba(220,38,38,0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220,38,38,0); }
 }
 
 .res-label {
-    font-size: 0.63rem;
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-sub);
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 .res-val {
-    font-size: 1.32rem;
+    font-size: 1.22rem;
     font-weight: 800;
-    line-height: 1.12;
+    line-height: 1.1;
     letter-spacing: -0.02em;
     transition: color 0.2s;
 }
 .res-sub {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .text-green { color: var(--green) !important; }
@@ -362,21 +357,21 @@ input::placeholder {
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 7px;
+    gap: 6px;
 }
 .metric-card {
     background: var(--bg-input);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 8px;
+    padding: 7px;
 }
 .metric-title {
-    font-size: 0.63rem;
+    font-size: 0.6rem;
     color: var(--text-sub);
     font-weight: 600;
 }
 .metric-amount {
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--text-main);
     margin-top: 1px;
@@ -387,26 +382,26 @@ input::placeholder {
     background: #f0f9ff;
     border-left: 3px solid var(--primary);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 8px 10px;
-    font-size: 0.7rem;
+    padding: 7px 9px;
+    font-size: 0.66rem;
     color: #334155;
-    line-height: 1.35;
+    line-height: 1.3;
 }
 .note-head {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 700;
     color: var(--primary);
     text-transform: uppercase;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     letter-spacing: 0.03em;
 }
 
 /* ===== BADGES ===== */
 .badge {
-    font-size: 0.6rem;
+    font-size: 0.56rem;
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 16px;
+    padding: 2px 7px;
+    border-radius: 14px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
 }
@@ -416,25 +411,25 @@ input::placeholder {
 .badge-amber { background: #fef3c7; color: #b45309; }
 
 /* ===== TABLE ===== */
-.compact-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+.compact-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
 .compact-table th {
     background: var(--bg-input);
-    padding: 6px 5px;
+    padding: 5px 4px;
     text-align: left;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
     color: var(--text-sub);
     border-bottom: 1.5px solid var(--border);
 }
 .compact-table td {
-    padding: 6px 5px;
+    padding: 5px 4px;
     border-bottom: 1px solid var(--border-light);
     vertical-align: middle;
 }
 
 .btn-sm {
-    padding: 4px 9px;
-    font-size: 0.7rem;
+    padding: 3px 8px;
+    font-size: 0.66rem;
     font-weight: 600;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--border);
@@ -450,10 +445,10 @@ input::placeholder {
 
 footer {
     text-align: center;
-    font-size: 0.66rem;
+    font-size: 0.62rem;
     color: var(--text-muted);
-    padding: 12px 6px 6px;
-    margin-top: 4px;
+    padding: 10px 6px 4px;
+    margin-top: 2px;
 }
 </style>
 </head>
@@ -463,13 +458,13 @@ footer {
     <div class="header-content">
         <div class="header-left">
             <button class="menu-btn" onclick="toggleDrawer()" title="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
                 </svg>
             </button>
             <div>
                 <div class="brand-title">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
                     </svg>
                     Kalkulator Saham Pro
@@ -530,7 +525,7 @@ footer {
     </div>
     <div class="drawer-footer">
         Ridwan Budi Laksono · 2026<br>
-        <span style="font-size:0.64rem;font-weight:500;">Fee: 0,15% / 0,25% (ETF jual 0,15%)</span>
+        <span style="font-size:0.6rem;font-weight:500;">Fee: 0,15% / 0,25% (ETF jual 0,15%)</span>
     </div>
 </aside>
 
@@ -652,15 +647,15 @@ footer {
                     <span id="ara-badge" class="badge badge-gray">Belum Diisi</span>
                 </div>
                 <div class="metrics-grid" style="grid-template-columns:1fr 1fr;">
-                    <div class="metric-card" style="border-left:3px solid var(--green);background:var(--green-bg);padding:10px;">
+                    <div class="metric-card" style="border-left:3px solid var(--green);background:var(--green-bg);padding:9px;">
                         <div class="metric-title" style="color:var(--green);">AUTO REJECTION ATAS</div>
-                        <div class="metric-amount text-green" style="font-size:1.22rem;" id="ara-out-ara">Rp 0</div>
-                        <span style="font-size:0.65rem;color:var(--text-sub);" id="ara-pct-ara">Maksimal Kenaikan: +0,00%</span>
+                        <div class="metric-amount text-green" style="font-size:1.15rem;" id="ara-out-ara">Rp 0</div>
+                        <span style="font-size:0.62rem;color:var(--text-sub);" id="ara-pct-ara">Maksimal Kenaikan: +0,00%</span>
                     </div>
-                    <div class="metric-card" style="border-left:3px solid var(--red);background:var(--red-bg);padding:10px;">
+                    <div class="metric-card" style="border-left:3px solid var(--red);background:var(--red-bg);padding:9px;">
                         <div class="metric-title" style="color:var(--red);">AUTO REJECTION BAWAH</div>
-                        <div class="metric-amount text-red" style="font-size:1.22rem;" id="ara-out-arb">Rp 0</div>
-                        <span style="font-size:0.65rem;color:var(--text-sub);" id="ara-pct-arb">Maksimal Penurunan: -0,00%</span>
+                        <div class="metric-amount text-red" style="font-size:1.15rem;" id="ara-out-arb">Rp 0</div>
+                        <span style="font-size:0.62rem;color:var(--text-sub);" id="ara-pct-arb">Maksimal Penurunan: -0,00%</span>
                     </div>
                 </div>
                 <div class="note-box">
@@ -723,17 +718,17 @@ footer {
                 <div class="card-header-compact">
                     <span class="card-title">Patokan Harga Eksekusi</span>
                 </div>
-                <div class="metric-card" style="border-left:3px solid var(--amber);background:var(--amber-bg);padding:10px;">
+                <div class="metric-card" style="border-left:3px solid var(--amber);background:var(--amber-bg);padding:9px;">
                     <div class="metric-title" style="color:var(--amber);">HARGA BREAK EVEN (BEP)</div>
-                    <div class="metric-amount" style="font-size:1.18rem;" id="tp-out-bep">Rp 0</div>
-                    <span style="font-size:0.65rem;color:var(--text-sub);">Harga minimal jual agar modal tidak tergerus fee.</span>
+                    <div class="metric-amount" style="font-size:1.12rem;" id="tp-out-bep">Rp 0</div>
+                    <span style="font-size:0.62rem;color:var(--text-sub);">Harga minimal jual agar modal tidak tergerus fee.</span>
                 </div>
-                <div class="metric-card" style="border-left:3px solid var(--green);background:var(--green-bg);padding:10px;margin-top:7px;">
+                <div class="metric-card" style="border-left:3px solid var(--green);background:var(--green-bg);padding:9px;margin-top:6px;">
                     <div class="metric-title" style="color:var(--green);" id="tp-label-target">HARGA TARGET PROFIT (0,00%)</div>
-                    <div class="metric-amount text-green" style="font-size:1.18rem;" id="tp-out-target">Rp 0</div>
-                    <span style="font-size:0.65rem;color:var(--text-sub);">Harga jual wajib untuk mengamankan Net Profit target.</span>
+                    <div class="metric-amount text-green" style="font-size:1.12rem;" id="tp-out-target">Rp 0</div>
+                    <span style="font-size:0.62rem;color:var(--text-sub);">Harga jual wajib untuk mengamankan Net Profit target.</span>
                 </div>
-                <div class="note-box" style="margin-top:7px;">
+                <div class="note-box" style="margin-top:6px;">
                     <div class="note-head">Catatan Analis</div>
                     <div>Default Fee: Beli 0,15% | Jual 0,25%. Jangan pernah memasang order jual persis di harga beli jika ingin balik modal secara bersih.</div>
                 </div>
@@ -752,17 +747,17 @@ footer {
                 <table class="compact-table">
                     <thead>
                         <tr>
-                            <th style="width:28px;">#</th>
+                            <th style="width:26px;">#</th>
                             <th>Harga Beli (Rp)</th>
                             <th>Jumlah (Lot)</th>
                             <th>Total Nilai</th>
-                            <th style="width:38px;text-align:center;">Aksi</th>
+                            <th style="width:36px;text-align:center;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="avg-tbody"></tbody>
                 </table>
             </div>
-            <div class="grid-2" style="margin-top:6px;">
+            <div class="grid-2" style="margin-top:5px;">
                 <div class="metrics-grid" style="grid-template-columns:repeat(3,1fr);">
                     <div class="metric-card">
                         <div class="metric-title">Total Lot</div>
@@ -777,10 +772,10 @@ footer {
                         <div class="metric-amount" id="avg-out-val">Rp 0</div>
                     </div>
                 </div>
-                <div class="res-hero neutral" id="avg-hero" style="display:flex;flex-direction:column;justify-content:center;padding:8px 12px;">
+                <div class="res-hero neutral" id="avg-hero" style="display:flex;flex-direction:column;justify-content:center;padding:7px 10px;">
                     <div class="res-label">Harga Rata-Rata Baru</div>
                     <div class="res-val text-blue" id="avg-out-price">Rp 0</div>
-                    <div class="res-sub text-blue" style="font-size:0.7rem;" id="avg-out-status">Sistem Siap</div>
+                    <div class="res-sub text-blue" style="font-size:0.66rem;" id="avg-out-status">Sistem Siap</div>
                 </div>
             </div>
             <div class="note-box">
@@ -828,7 +823,7 @@ footer {
                 <div class="res-hero neutral" id="div-hero">
                     <div class="res-label">Dividend Yield (Tahunan)</div>
                     <div class="res-val text-blue" id="div-out-yield">0,00%</div>
-                    <div class="res-sub text-blue" style="font-size:0.7rem;" id="div-out-desc">Masukkan harga & DPS</div>
+                    <div class="res-sub text-blue" style="font-size:0.66rem;" id="div-out-desc">Masukkan harga & DPS</div>
                 </div>
                 <div class="metrics-grid">
                     <div class="metric-card">
@@ -895,7 +890,7 @@ footer {
                 <div class="res-hero neutral" id="ps-hero">
                     <div class="res-label">Maksimal Pembelian Aman</div>
                     <div class="res-val text-blue" id="ps-out-lots">0 Lot</div>
-                    <div class="res-sub text-blue" style="font-size:0.7rem;" id="ps-out-val">Nilai: Rp 0 (0,00% Portfolio)</div>
+                    <div class="res-sub text-blue" style="font-size:0.66rem;" id="ps-out-val">Nilai: Rp 0 (0,00% Portfolio)</div>
                 </div>
                 <div class="metrics-grid">
                     <div class="metric-card">
@@ -1297,18 +1292,30 @@ function switchTab(panelId, navId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== SWIPE =====
+// ===== SWIPE (LOOPING / CIRCULAR) =====
 let touchStartX = 0, touchEndX = 0;
 const container = document.getElementById('mainContainer');
 container.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
 container.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
     const diff = touchEndX - touchStartX;
-    if (Math.abs(diff) < 60) return;
+    if (Math.abs(diff) < 55) return;
+
     const currentIdx = panels.findIndex(p => document.getElementById(p).classList.contains('active'));
     if (currentIdx === -1) return;
-    let nextIdx = diff < 0 ? Math.min(currentIdx + 1, panels.length - 1) : Math.max(currentIdx - 1, 0);
-    if (nextIdx !== currentIdx) switchTab(panels[nextIdx], navs[nextIdx]);
+
+    let nextIdx;
+    if (diff < 0) {
+        // swipe left → next (loop to 0 if last)
+        nextIdx = (currentIdx + 1) % panels.length;
+    } else {
+        // swipe right → prev (loop to last if first)
+        nextIdx = (currentIdx - 1 + panels.length) % panels.length;
+    }
+
+    if (nextIdx !== currentIdx) {
+        switchTab(panels[nextIdx], navs[nextIdx]);
+    }
 }, { passive: true });
 
 // ===== CALCULATIONS =====
@@ -1344,7 +1351,6 @@ function calcGL() {
     const badge = document.getElementById('gl-badge');
     const note = document.getElementById('gl-note');
 
-    // Force reflow for animation restart
     hero.classList.remove('profit', 'loss', 'neutral');
     void hero.offsetWidth;
 
@@ -1795,7 +1801,6 @@ function calcRI() {
 
 // ===== INIT =====
 window.addEventListener('DOMContentLoaded', () => {
-    // Make default "1" on lots look gray until user edits
     const lotsEl = document.getElementById('gl-lots');
     if (lotsEl && lotsEl.value === '1') {
         lotsEl.classList.remove('has-value');
