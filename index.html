@@ -2,68 +2,67 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Saham Profesional v6</title>
-    <!-- Favicon Dollar Inline SVG -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231d4ed8'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-size='62' font-weight='bold' fill='white' font-family='system-ui, -apple-system, sans-serif'>$</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kalkulator Saham Profesional v7.1</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231d4ed8'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-size='62' font-weight='bold' fill='white' font-family='system-ui'>$</text></svg>">
     <style>
         :root {
-            --bg-body: #f8fafc;
+            --bg-body: #f1f5f9;
             --bg-card: #ffffff;
-            --bg-input: #f1f5f9;
+            --bg-input: #f8fafc;
             --text-main: #0f172a;
             --text-sub: #475569;
             --text-muted: #94a3b8;
-            --border: #cbd5e1;
-            --border-light: #e2e8f0;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
             --primary: #1d4ed8;
             --primary-dark: #0f172a;
             --primary-light: #eff6ff;
             --primary-border: #bfdbfe;
-            --green: #15803d;
-            --green-bg: #f0fdf4;
-            --green-border: #bbf7d0;
-            --red: #b91c1c;
+            --green: #059669;
+            --green-bg: #ecfdf5;
+            --green-border: #a7f3d0;
+            --red: #dc2626;
             --red-bg: #fef2f2;
             --red-border: #fecaca;
-            --amber: #b45309;
+            --amber: #d97706;
             --amber-bg: #fffbeb;
-            --amber-border: #fef3c7;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --amber-border: #fde68a;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.08);
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-body);
+            background: var(--bg-body);
             color: var(--text-main);
-            line-height: 1.4;
-            padding-bottom: 76px;
+            line-height: 1.45;
+            padding-bottom: 82px;
             -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
         }
 
         .container {
-            max-width: 1080px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 14px;
+            padding: 16px 14px 20px;
         }
 
-        /* Animated Header */
         header {
             position: relative;
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%);
             background-size: 200% 200%;
-            animation: headerGradient 8s ease infinite;
-            color: #ffffff;
-            padding: 12px 18px;
-            box-shadow: var(--shadow-md);
+            animation: headerGradient 10s ease infinite;
+            color: #fff;
+            padding: 14px 16px;
+            box-shadow: 0 4px 20px rgba(29,78,216,0.25);
             overflow: hidden;
         }
 
@@ -76,22 +75,19 @@
         header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
-            animation: pulseGlow 6s ease-in-out infinite alternate;
+            inset: -50%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.12) 0%, transparent 55%);
+            animation: pulseGlow 7s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(0.95); opacity: 0.5; }
-            100% { transform: scale(1.05); opacity: 0.9; }
+            0% { transform: scale(0.9); opacity: 0.4; }
+            100% { transform: scale(1.1); opacity: 0.85; }
         }
 
         .header-content {
-            max-width: 1080px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -107,102 +103,85 @@
         }
 
         .menu-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+            backdrop-filter: blur(6px);
         }
 
-        .menu-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.04);
-        }
+        .menu-btn:hover { background: rgba(255,255,255,0.28); transform: scale(1.05); }
 
         .brand-title {
-            font-size: 1.05rem;
+            font-size: 1.08rem;
             font-weight: 700;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .brand-subtitle {
-            font-size: 0.725rem;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.78);
             font-weight: 500;
+            margin-top: 1px;
         }
 
-        /* Side Navigation Drawer */
         .drawer-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(3px);
+            inset: 0;
+            background: rgba(15,23,42,0.55);
+            backdrop-filter: blur(4px);
             z-index: 1050;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.25s ease;
+            transition: all 0.28s ease;
         }
-
-        .drawer-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
 
         .drawer {
             position: fixed;
             top: 0; left: 0; bottom: 0;
-            width: 290px;
-            background: #ffffff;
+            width: 300px;
+            max-width: 85vw;
+            background: #fff;
             z-index: 1100;
             box-shadow: var(--shadow-lg);
-            transform: translateX(-100%);
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-105%);
+            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
             display: flex;
             flex-direction: column;
         }
-
-        .drawer.active {
-            transform: translateX(0);
-        }
+        .drawer.active { transform: translateX(0); }
 
         .drawer-header {
-            padding: 16px;
-            background: var(--primary-dark);
-            color: #ffffff;
+            padding: 18px 16px;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .drawer-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
+        .drawer-title { font-size: 0.95rem; font-weight: 700; }
         .drawer-close {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 4px;
+            background: none; border: none; color: #fff;
+            font-size: 1.25rem; cursor: pointer; padding: 4px 8px;
         }
 
         .drawer-menu {
             padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             overflow-y: auto;
             flex: 1;
         }
@@ -210,10 +189,10 @@
         .drawer-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 0.825rem;
+            gap: 11px;
+            padding: 11px 13px;
+            border-radius: 10px;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-sub);
             border: none;
@@ -221,43 +200,36 @@
             width: 100%;
             text-align: left;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s;
         }
-
         .drawer-item:hover, .drawer-item.active {
             background: var(--primary-light);
             color: var(--primary);
         }
-
-        .drawer-item svg {
-            width: 18px;
-            height: 18px;
-            stroke-width: 2;
-            flex-shrink: 0;
-        }
+        .drawer-item svg { width: 18px; height: 18px; stroke-width: 2; flex-shrink: 0; }
 
         .drawer-footer {
             padding: 14px;
-            border-top: 1px solid var(--border-light);
-            font-size: 0.775rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-sub);
             text-align: center;
             background: var(--bg-input);
         }
 
-        /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            background: #ffffff;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 4px 2px;
+            padding: 6px 2px calc(6px + env(safe-area-inset-bottom));
             z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
         }
 
         .nav-item {
@@ -270,105 +242,91 @@
             background: none;
             border: none;
             color: var(--text-sub);
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.15s ease;
-            text-decoration: none;
-            border-radius: var(--radius-sm);
-            max-width: 120px;
-            line-height: 1.1;
+            transition: all 0.18s;
+            border-radius: 10px;
+            max-width: 110px;
+            line-height: 1.15;
         }
-
-        .nav-item svg {
-            width: 18px;
-            height: 18px;
-            margin-bottom: 2px;
-            stroke-width: 2;
-        }
-
-        .nav-item:hover {
-            color: var(--primary);
-            background: var(--primary-light);
-        }
-
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 2px; stroke-width: 2; }
+        .nav-item:hover { color: var(--primary); background: var(--primary-light); }
         .nav-item.active {
             color: var(--primary);
             background: var(--primary-light);
             font-weight: 700;
         }
 
-        /* Panels & Layout */
         .panel {
             display: none;
-            animation: fadeIn 0.2s ease;
+            animation: fadeIn 0.25s ease;
         }
-        .panel.active {
-            display: block;
-        }
+        .panel.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(3px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 14px;
         }
-
         @media (max-width: 768px) {
             .grid-2 { grid-template-columns: 1fr; }
         }
 
-        /* Compact & Symmetrical Cards */
         .card {
             background: var(--bg-card);
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            padding: 14px;
+            padding: 16px;
             box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            transition: box-shadow 0.2s;
         }
+        .card:hover { box-shadow: var(--shadow-md); }
 
         .card-header-compact {
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--border-light);
-            padding-bottom: 6px;
+            padding-bottom: 8px;
         }
 
         .card-title {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-main);
+            letter-spacing: -0.01em;
         }
 
         .card-desc {
-            font-size: 0.75rem;
+            font-size: 0.76rem;
             color: var(--text-sub);
-            margin-top: -4px;
+            margin-top: -6px;
+            line-height: 1.4;
         }
 
-        /* Forms & Inputs */
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
         label {
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             font-weight: 600;
             color: var(--text-sub);
         }
@@ -381,45 +339,51 @@
 
         .input-prefix, .input-suffix {
             position: absolute;
-            font-size: 0.775rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             font-weight: 600;
             pointer-events: none;
+            z-index: 1;
         }
-        .input-prefix { left: 8px; }
-        .input-suffix { right: 8px; }
+        .input-prefix { left: 10px; }
+        .input-suffix { right: 10px; }
 
-        input {
+        input, select {
             width: 100%;
-            padding: 7px 8px;
-            font-size: 0.875rem;
+            padding: 9px 10px;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
-            background-color: var(--bg-input);
-            border: 1px solid var(--border);
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
             border-radius: var(--radius-sm);
             outline: none;
-            transition: all 0.15s ease;
+            transition: all 0.18s;
+            appearance: none;
         }
 
-        input.has-prefix { padding-left: 30px; }
-        input.has-suffix { padding-right: 30px; }
+        input.has-prefix { padding-left: 34px; }
+        input.has-suffix { padding-right: 36px; }
 
-        input:focus {
-            background-color: #ffffff;
+        input:focus, select:focus {
+            background: #fff;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.12);
+            box-shadow: 0 0 0 3px rgba(29,78,216,0.12);
         }
 
-        /* Results Display */
+        input::placeholder {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
         .res-hero {
-            padding: 12px;
+            padding: 14px;
             border-radius: var(--radius-sm);
             text-align: center;
-            border: 1px solid var(--border-light);
+            border: 1.5px solid var(--border);
             background: var(--bg-input);
+            transition: all 0.2s;
         }
-
         .res-hero.profit {
             background: var(--green-bg);
             border-color: var(--green-border);
@@ -434,24 +398,25 @@
         }
 
         .res-label {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
             color: var(--text-sub);
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .res-val {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 800;
             line-height: 1.15;
+            letter-spacing: -0.02em;
         }
 
         .res-sub {
-            font-size: 0.825rem;
+            font-size: 0.84rem;
             font-weight: 700;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .text-green { color: var(--green) !important; }
@@ -466,215 +431,225 @@
 
         .metric-card {
             background: var(--bg-input);
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            padding: 8px;
+            padding: 10px;
         }
 
         .metric-title {
-            font-size: 0.685rem;
+            font-size: 0.68rem;
             color: var(--text-sub);
             font-weight: 600;
         }
 
         .metric-amount {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--text-main);
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
-        /* Note Box */
         .note-box {
             background: #f0f9ff;
-            border-left: 3px solid var(--primary);
+            border-left: 3.5px solid var(--primary);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-            padding: 8px 10px;
-            font-size: 0.75rem;
+            padding: 10px 12px;
+            font-size: 0.76rem;
             color: #334155;
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .note-head {
-            font-size: 0.675rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--primary);
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
+            letter-spacing: 0.03em;
         }
 
-        /* Badges */
         .badge {
-            font-size: 0.675rem;
+            font-size: 0.66rem;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 8px;
+            padding: 3px 9px;
+            border-radius: 20px;
             text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
-        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-green { background: #d1fae5; color: #047857; }
         .badge-red { background: #fee2e2; color: #b91c1c; }
         .badge-gray { background: #e2e8f0; color: #475569; }
+        .badge-amber { background: #fef3c7; color: #b45309; }
 
-        /* Tables */
         .compact-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.775rem;
+            font-size: 0.8rem;
         }
-
         .compact-table th {
             background: var(--bg-input);
-            padding: 6px;
+            padding: 8px 6px;
             text-align: left;
             font-size: 0.7rem;
             font-weight: 700;
             color: var(--text-sub);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1.5px solid var(--border);
         }
-
         .compact-table td {
-            padding: 6px;
+            padding: 8px 6px;
             border-bottom: 1px solid var(--border-light);
             vertical-align: middle;
         }
 
         .btn-sm {
-            padding: 4px 8px;
-            font-size: 0.725rem;
+            padding: 5px 10px;
+            font-size: 0.74rem;
             font-weight: 600;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: #ffffff;
+            border: 1.5px solid var(--border);
+            background: #fff;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s;
         }
         .btn-sm:hover { background: var(--bg-input); }
-        .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
         .btn-primary:hover { background: #1e40af; }
-        .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+        .btn-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            border-color: #fecaca;
+        }
         .btn-danger:hover { background: #fee2e2; }
 
         footer {
             text-align: center;
-            font-size: 0.725rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            padding: 12px;
-            margin-top: 6px;
+            padding: 16px 8px 8px;
+            margin-top: 8px;
+        }
+
+        .swipe-hint {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            padding: 6px 0 2px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <!-- ANIMATED & PROMINENT HEADER -->
     <header>
         <div class="header-content">
             <div class="header-left">
-                <!-- Side Nav Trigger (3 Dots / Hamburger) -->
-                <button class="menu-btn" onclick="toggleDrawer()" title="Buka Menu Navigasi">
+                <button class="menu-btn" onclick="toggleDrawer()" title="Menu">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <circle cx="12" cy="5" r="1.5"></circle>
-                        <circle cx="12" cy="12" r="1.5"></circle>
-                        <circle cx="12" cy="19" r="1.5"></circle>
+                        <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
                     </svg>
                 </button>
                 <div>
                     <div class="brand-title">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-                        Kalkulator Saham Profesional
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                        </svg>
+                        Kalkulator Saham Pro
                     </div>
-                    <div class="brand-subtitle">Analis & Investor Equity Suite</div>
+                    <div class="brand-subtitle">Equity Suite · BEI Rules 2026</div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- SIDE NAVIGATION DRAWER OVERLAY -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-
-    <!-- SIDE NAVIGATION DRAWER WITH FULL MENU LIST -->
     <aside class="drawer" id="drawer">
         <div class="drawer-header">
-            <span class="drawer-title">Menu Kalkulator Saham</span>
+            <span class="drawer-title">Menu Kalkulator</span>
             <button class="drawer-close" onclick="toggleDrawer()">✕</button>
         </div>
         <div class="drawer-menu">
-            <button class="drawer-item active" onclick="switchTab('panel-gl', 'nav-gl')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                1. Gain / Loss & Saldo Profit
+            <button class="drawer-item active" onclick="switchTab('panel-gl','nav-gl')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                1. Gain / Loss & Saldo
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-ara', 'nav-ara')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            <button class="drawer-item" onclick="switchTab('panel-ara','nav-ara')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"/></svg>
                 2. Batas ARA & ARB (BEI)
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-tp', 'nav-tp')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            <button class="drawer-item" onclick="switchTab('panel-tp','nav-tp')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>
                 3. Target Harga & BEP
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-avg', 'nav-avg')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+            <button class="drawer-item" onclick="switchTab('panel-avg','nav-avg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
                 4. Average Down / Up
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-div', 'nav-div')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <button class="drawer-item" onclick="switchTab('panel-div','nav-div')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                 5. Dividend Yield
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-ps', 'nav-ps')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <button class="drawer-item" onclick="switchTab('panel-ps','nav-ps')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 6. Position Sizing
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-rrr', 'nav-rrr')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>
-                7. Risk / Reward Ratio (RRR)
+            <button class="drawer-item" onclick="switchTab('panel-rrr','nav-rrr')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                7. Risk / Reward Ratio
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-comp', 'nav-comp')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <button class="drawer-item" onclick="switchTab('panel-comp','nav-comp')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 8. Proyeksi Compound
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-val', 'nav-val')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            <button class="drawer-item" onclick="switchTab('panel-val','nav-val')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                 9. Valuasi PER & PBV
             </button>
-            <button class="drawer-item" onclick="switchTab('panel-ri', 'nav-ri')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                10. Theoretical Right Issue (HMETD)
+            <button class="drawer-item" onclick="switchTab('panel-ri','nav-ri')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+                10. Theoretical Right Issue
             </button>
         </div>
         <div class="drawer-footer">
-            Ridwan Budi Laksono - 2026<br>
-            <span style="font-size:0.7rem;font-weight:500;">Fee: 0,15%/0,25% (ETF jual 0,15%)</span>
+            Ridwan Budi Laksono · 2026<br>
+            <span style="font-size:0.68rem;font-weight:500;">Fee: 0,15% / 0,25% (ETF jual 0,15%)</span>
         </div>
     </aside>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
+        <div class="swipe-hint">← Swipe kiri / kanan untuk ganti tab →</div>
 
-        <!-- 1. GAIN / LOSS PANEL -->
+        <!-- 1. GAIN / LOSS -->
         <section id="panel-gl" class="panel active">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">1. Gain / Loss & Nominal Profit (Net)</span>
                     </div>
-                    <p class="card-desc">Hitung persentase dan nominal saldo untung/rugi bersih setelah fee broker (asumsi realisasi di harga sekarang).</p>
+                    <p class="card-desc">Hitung persentase & nominal saldo untung/rugi bersih setelah fee broker.</p>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="gl-buy">Harga Beli / Awal (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="gl-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcGL()">
+                                <input type="text" inputmode="decimal" id="gl-buy" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcGL)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="gl-current">Harga Sekarang (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="gl-current" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcGL()">
+                                <input type="text" inputmode="decimal" id="gl-current" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcGL)">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="gl-lots">Jumlah Pembelian (Lot)</label>
                         <div class="input-group">
-                            <input type="number" id="gl-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcGL()">
+                            <input type="text" inputmode="numeric" id="gl-lots" class="has-suffix num-input" value="1" placeholder="1" oninput="formatAndCalc(this, calcGL)">
                             <span class="input-suffix">Lot</span>
                         </div>
                     </div>
@@ -682,14 +657,14 @@
                         <div class="form-group">
                             <label for="gl-buy-fee">Fee Beli (%)</label>
                             <div class="input-group">
-                                <input type="number" id="gl-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcGL()">
+                                <input type="text" inputmode="decimal" id="gl-buy-fee" class="has-suffix num-input" placeholder="0.15" oninput="formatAndCalc(this, calcGL)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="gl-sell-fee">Fee Jual (%)</label>
                             <div class="input-group">
-                                <input type="number" id="gl-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcGL()">
+                                <input type="text" inputmode="decimal" id="gl-sell-fee" class="has-suffix num-input" placeholder="0.25" oninput="formatAndCalc(this, calcGL)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
@@ -726,39 +701,97 @@
                     </div>
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
-                        <div id="gl-note">Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh). Masukkan data untuk menghitung net profit/rugi saldo.</div>
+                        <div id="gl-note">Default Fee: Beli 0,15% | Jual 0,25%. ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh).</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. TARGET PRICE & BEP PANEL -->
+        <!-- 2. ARA & ARB -->
+        <section id="panel-ara" class="panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">2. Kalkulator ARA & ARB (BEI)</span>
+                    </div>
+                    <p class="card-desc">Batas Auto Rejection Atas & Bawah sesuai regulasi BEI terbaru (bisa sampai Rp1).</p>
+                    <div class="form-group">
+                        <label for="ara-price">Harga Penutupan Kemarin / Closing (Rp)</label>
+                        <div class="input-group">
+                            <span class="input-prefix">Rp</span>
+                            <input type="text" inputmode="decimal" id="ara-price" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcARA)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ara-type">Jenis Pasar / Papan</label>
+                        <select id="ara-type" onchange="calcARA()">
+                            <option value="regular">Pasar Reguler (Utama / Pengembangan / Ekonomi Baru)</option>
+                            <option value="ipo">Saham Baru IPO (Hari Pertama)</option>
+                            <option value="watch">Papan Pemantauan Khusus (Periodic Call)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-compact">
+                        <span class="card-title">Batas Rentang Harga Hari Ini</span>
+                        <span id="ara-badge" class="badge badge-gray">Belum Diisi</span>
+                    </div>
+                    <div class="metrics-grid" style="grid-template-columns:1fr 1fr;">
+                        <div class="metric-card" style="border-left:3.5px solid var(--green);background:var(--green-bg);padding:12px;">
+                            <div class="metric-title" style="color:var(--green);">AUTO REJECTION ATAS</div>
+                            <div class="metric-amount text-green" style="font-size:1.35rem;" id="ara-out-ara">Rp 0</div>
+                            <span style="font-size:0.7rem;color:var(--text-sub);" id="ara-pct-ara">Maksimal Kenaikan: +0,00%</span>
+                        </div>
+                        <div class="metric-card" style="border-left:3.5px solid var(--red);background:var(--red-bg);padding:12px;">
+                            <div class="metric-title" style="color:var(--red);">AUTO REJECTION BAWAH</div>
+                            <div class="metric-amount text-red" style="font-size:1.35rem;" id="ara-out-arb">Rp 0</div>
+                            <span style="font-size:0.7rem;color:var(--text-sub);" id="ara-pct-arb">Maksimal Penurunan: -0,00%</span>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-head">Aturan Auto Rejection BEI (28 Sep – 31 Des 2026)</div>
+                        <div id="ara-rules-note">
+                            <strong>Pasar Reguler (Asimetris):</strong><br>
+                            • Rp1–Rp10: ARA +Rp1 | ARB −Rp1<br>
+                            • Rp11–≤Rp200: ARA +35% | ARB −15%<br>
+                            • >Rp200–≤Rp5.000: ARA +25% | ARB −15%<br>
+                            • >Rp5.000: ARA +20% | ARB −15%<br><br>
+                            <strong>IPO Hari Pertama:</strong> Batas 2× lipat<br>
+                            <strong>Papan Pemantauan:</strong> Simetris ±10% (min Rp1)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TARGET / BEP -->
         <section id="panel-tp" class="panel">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">3. Target Harga & BEP</span>
                     </div>
-                    <p class="card-desc">Hitung harga jual minimal agar balik modal atau mencapai profit target (setelah fee default 0,15%/0,25%).</p>
+                    <p class="card-desc">Hitung harga jual minimal agar balik modal atau mencapai profit target.</p>
                     <div class="form-group">
                         <label for="tp-buy">Harga Beli (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="tp-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcTP()">
+                            <input type="text" inputmode="decimal" id="tp-buy" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcTP)">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="tp-buy-fee">Fee Beli (%)</label>
                             <div class="input-group">
-                                <input type="number" id="tp-buy-fee" class="has-suffix" value="" placeholder="0.15" min="0" step="0.01" oninput="calcTP()">
+                                <input type="text" inputmode="decimal" id="tp-buy-fee" class="has-suffix num-input" placeholder="0.15" oninput="formatAndCalc(this, calcTP)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="tp-sell-fee">Fee Jual (%)</label>
                             <div class="input-group">
-                                <input type="number" id="tp-sell-fee" class="has-suffix" value="" placeholder="0.25" min="0" step="0.01" oninput="calcTP()">
+                                <input type="text" inputmode="decimal" id="tp-sell-fee" class="has-suffix num-input" placeholder="0.25" oninput="formatAndCalc(this, calcTP)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
@@ -766,7 +799,7 @@
                     <div class="form-group">
                         <label for="tp-target">Target Net Profit (%)</label>
                         <div class="input-group">
-                            <input type="number" id="tp-target" class="has-suffix" value="" placeholder="0" min="0" step="0.5" oninput="calcTP()">
+                            <input type="text" inputmode="decimal" id="tp-target" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcTP)">
                             <span class="input-suffix">%</span>
                         </div>
                     </div>
@@ -776,50 +809,47 @@
                     <div class="card-header-compact">
                         <span class="card-title">Patokan Harga Eksekusi</span>
                     </div>
-                    <div class="metric-card" style="border-left: 3px solid var(--amber); background: var(--amber-bg); padding: 10px;">
-                        <div class="metric-title" style="color: var(--amber);">HARGA BREAK EVEN (BEP)</div>
-                        <div class="metric-amount" style="font-size: 1.25rem;" id="tp-out-bep">Rp 0</div>
-                        <span style="font-size: 0.7rem; color: var(--text-sub);">Harga minimal jual agar modal tidak tergerus fee.</span>
+                    <div class="metric-card" style="border-left:3.5px solid var(--amber);background:var(--amber-bg);padding:12px;">
+                        <div class="metric-title" style="color:var(--amber);">HARGA BREAK EVEN (BEP)</div>
+                        <div class="metric-amount" style="font-size:1.3rem;" id="tp-out-bep">Rp 0</div>
+                        <span style="font-size:0.7rem;color:var(--text-sub);">Harga minimal jual agar modal tidak tergerus fee.</span>
                     </div>
-                    <div class="metric-card" style="border-left: 3px solid var(--green); background: var(--green-bg); padding: 10px;">
-                        <div class="metric-title" style="color: var(--green);" id="tp-label-target">HARGA TARGET PROFIT (0,00%)</div>
-                        <div class="metric-amount text-green" style="font-size: 1.25rem;" id="tp-out-target">Rp 0</div>
-                        <span style="font-size: 0.7rem; color: var(--text-sub);">Harga jual wajib untuk mengamankan Net Profit target.</span>
+                    <div class="metric-card" style="border-left:3.5px solid var(--green);background:var(--green-bg);padding:12px;margin-top:8px;">
+                        <div class="metric-title" style="color:var(--green);" id="tp-label-target">HARGA TARGET PROFIT (0,00%)</div>
+                        <div class="metric-amount text-green" style="font-size:1.3rem;" id="tp-out-target">Rp 0</div>
+                        <span style="font-size:0.7rem;color:var(--text-sub);">Harga jual wajib untuk mengamankan Net Profit target.</span>
                     </div>
-                    <div class="note-box">
+                    <div class="note-box" style="margin-top:8px;">
                         <div class="note-head">Catatan Analis</div>
-                        <div>Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant gunakan Fee Jual 0,15%. Jangan pernah memasang order jual persis di harga beli jika ingin balik modal secara bersih.</div>
+                        <div>Default Fee: Beli 0,15% | Jual 0,25%. Jangan pernah memasang order jual persis di harga beli jika ingin balik modal secara bersih.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. AVERAGE DOWN / UP PANEL -->
+        <!-- 4. AVERAGE -->
         <section id="panel-avg" class="panel">
             <div class="card">
                 <div class="card-header-compact">
                     <span class="card-title">4. Average Down / Average Up</span>
-                    <button class="btn-sm btn-primary" onclick="addAvgRow('', '')">+ Tambah Posisi</button>
+                    <button class="btn-sm btn-primary" onclick="addAvgRow()">+ Tambah Posisi</button>
                 </div>
-                <div style="overflow-x: auto;">
+                <div style="overflow-x:auto;">
                     <table class="compact-table">
                         <thead>
                             <tr>
-                                <th style="width: 30px;">#</th>
+                                <th style="width:32px;">#</th>
                                 <th>Harga Beli (Rp)</th>
                                 <th>Jumlah (Lot)</th>
-                                <th>Total Nilai (Rp)</th>
-                                <th style="width: 40px; text-align: center;">Aksi</th>
+                                <th>Total Nilai</th>
+                                <th style="width:42px;text-align:center;">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="avg-tbody">
-                            <!-- Dynamic Rows -->
-                        </tbody>
+                        <tbody id="avg-tbody"></tbody>
                     </table>
                 </div>
-
-                <div class="grid-2">
-                    <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="grid-2" style="margin-top:8px;">
+                    <div class="metrics-grid" style="grid-template-columns:repeat(3,1fr);">
                         <div class="metric-card">
                             <div class="metric-title">Total Lot</div>
                             <div class="metric-amount" id="avg-out-lots">0 Lot</div>
@@ -833,22 +863,20 @@
                             <div class="metric-amount" id="avg-out-val">Rp 0</div>
                         </div>
                     </div>
-
-                    <div class="res-hero neutral" id="avg-hero" style="display: flex; flex-direction: column; justify-content: center; padding: 8px 12px;">
-                        <div class="res-label">Harga Rata-Rata Baru (Average Price)</div>
+                    <div class="res-hero neutral" id="avg-hero" style="display:flex;flex-direction:column;justify-content:center;padding:10px 14px;">
+                        <div class="res-label">Harga Rata-Rata Baru</div>
                         <div class="res-val text-blue" id="avg-out-price">Rp 0</div>
-                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="avg-out-status">Sistem Siap - Masukkan Data</div>
+                        <div class="res-sub text-blue" style="font-size:0.75rem;" id="avg-out-status">Sistem Siap</div>
                     </div>
                 </div>
-
                 <div class="note-box">
                     <div class="note-head">Catatan Analis</div>
-                    <div>Melakukan Average Down pada saham fundamental buruk hanya akan memperbesar risiko. Lakukan hanya pada bisnis berkualitas.</div>
+                    <div>Average Down pada saham fundamental buruk hanya memperbesar risiko. Lakukan hanya pada bisnis berkualitas.</div>
                 </div>
             </div>
         </section>
 
-        <!-- 5. DIVIDEND YIELD PANEL -->
+        <!-- 5. DIVIDEND -->
         <section id="panel-div" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -860,25 +888,24 @@
                         <label for="div-price">Harga Saham Saat Ini (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="div-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcDiv()">
+                            <input type="text" inputmode="decimal" id="div-price" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcDiv)">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="div-dps">Dividen per Lembar / DPS (Rp/Thn)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="div-dps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcDiv()">
+                            <input type="text" inputmode="decimal" id="div-dps" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcDiv)">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="div-lots">Kepemilikan Saham (Lot)</label>
                         <div class="input-group">
-                            <input type="number" id="div-lots" class="has-suffix" value="" placeholder="0" min="0" step="1" oninput="calcDiv()">
+                            <input type="text" inputmode="numeric" id="div-lots" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcDiv)">
                             <span class="input-suffix">Lot</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Hasil Dividend Yield</span>
@@ -887,7 +914,7 @@
                     <div class="res-hero neutral" id="div-hero">
                         <div class="res-label">Dividend Yield (Tahunan)</div>
                         <div class="res-val text-blue" id="div-out-yield">0,00%</div>
-                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="div-out-desc">Masukkan harga saham & DPS</div>
+                        <div class="res-sub text-blue" style="font-size:0.75rem;" id="div-out-desc">Masukkan harga & DPS</div>
                     </div>
                     <div class="metrics-grid">
                         <div class="metric-card">
@@ -901,13 +928,13 @@
                     </div>
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
-                        <div>Waspadai <i>Dividend Trap</i>. Yield tinggi karena penurunan harga saham yang tajam belum tentu menyehatkan.</div>
+                        <div>Waspadai Dividend Trap. Yield tinggi karena penurunan harga tajam belum tentu menyehatkan.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 6. POSITION SIZING PANEL -->
+        <!-- 6. POSITION SIZING -->
         <section id="panel-ps" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -919,14 +946,14 @@
                         <label for="ps-capital">Total Modal Portofolio (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="ps-capital" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                            <input type="text" inputmode="decimal" id="ps-capital" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcPS)">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="ps-risk">Risiko Max per Trade (%)</label>
                             <div class="input-group">
-                                <input type="number" id="ps-risk" class="has-suffix" value="" placeholder="2" min="0" step="0.5" oninput="calcPS()">
+                                <input type="text" inputmode="decimal" id="ps-risk" class="has-suffix num-input" placeholder="2" oninput="formatAndCalc(this, calcPS)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
@@ -934,7 +961,7 @@
                             <label for="ps-buy">Harga Beli (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="ps-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                                <input type="text" inputmode="decimal" id="ps-buy" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcPS)">
                             </div>
                         </div>
                     </div>
@@ -942,11 +969,10 @@
                         <label for="ps-sl">Harga Stop Loss / Cut Loss (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="ps-sl" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcPS()">
+                            <input type="text" inputmode="decimal" id="ps-sl" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcPS)">
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Batas Alokasi Pembelian</span>
@@ -955,7 +981,7 @@
                     <div class="res-hero neutral" id="ps-hero">
                         <div class="res-label">Maksimal Pembelian Aman</div>
                         <div class="res-val text-blue" id="ps-out-lots">0 Lot</div>
-                        <div class="res-sub text-blue" style="font-size: 0.75rem;" id="ps-out-val">Nilai: Rp 0 (0,00% Portfolio)</div>
+                        <div class="res-sub text-blue" style="font-size:0.75rem;" id="ps-out-val">Nilai: Rp 0 (0,00% Portfolio)</div>
                     </div>
                     <div class="metrics-grid">
                         <div class="metric-card">
@@ -969,13 +995,13 @@
                     </div>
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
-                        <div>Kunci keberlanjutan di pasar modal bukanlah seberapa sering Anda benar, tapi seberapa kecil rugi Anda saat salah.</div>
+                        <div>Kunci keberlanjutan di pasar modal bukan seberapa sering Anda benar, tapi seberapa kecil rugi saat salah.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 7. RISK / REWARD RATIO (RRR) -->
+        <!-- 7. RRR -->
         <section id="panel-rrr" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -987,7 +1013,7 @@
                         <label for="rrr-buy">Harga Entri / Beli (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="rrr-buy" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                            <input type="text" inputmode="decimal" id="rrr-buy" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcRRR)">
                         </div>
                     </div>
                     <div class="form-row">
@@ -995,19 +1021,18 @@
                             <label for="rrr-sl">Harga Stop Loss (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="rrr-sl" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                                <input type="text" inputmode="decimal" id="rrr-sl" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcRRR)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="rrr-tp">Target Harga / TP (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="rrr-tp" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRRR()">
+                                <input type="text" inputmode="decimal" id="rrr-tp" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcRRR)">
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Analisis Kelayakan Trade</span>
@@ -1030,13 +1055,13 @@
                     </div>
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
-                        <div>Standar trading profesional menyarankan RRR minimal 1 : 2.0 untuk menjaga ekspektansi profitabilitas jangka panjang.</div>
+                        <div>Standar trading profesional menyarankan RRR minimal 1 : 2,0 untuk menjaga ekspektansi profitabilitas jangka panjang.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 8. PROYEKSI COMPOUND INTEREST -->
+        <!-- 8. COMPOUND -->
         <section id="panel-comp" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -1048,34 +1073,33 @@
                         <label for="comp-init">Modal Awal Portofolio (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="comp-init" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcComp()">
+                            <input type="text" inputmode="decimal" id="comp-init" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcComp)">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="comp-add">Injeksi Modal Bulanan (Top-Up Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="comp-add" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcComp()">
+                            <input type="text" inputmode="decimal" id="comp-add" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcComp)">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="comp-rate">Target Return / Thn (%)</label>
                             <div class="input-group">
-                                <input type="number" id="comp-rate" class="has-suffix" value="" placeholder="0" min="0" step="0.5" oninput="calcComp()">
+                                <input type="text" inputmode="decimal" id="comp-rate" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcComp)">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="comp-years">Jangka Waktu (Tahun)</label>
                             <div class="input-group">
-                                <input type="number" id="comp-years" class="has-suffix" value="" placeholder="0" min="1" max="50" step="1" oninput="calcComp()">
+                                <input type="text" inputmode="numeric" id="comp-years" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcComp)">
                                 <span class="input-suffix">Thn</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Proyeksi AUM Portofolio</span>
@@ -1097,13 +1121,13 @@
                     </div>
                     <div class="note-box">
                         <div class="note-head">Catatan Analis</div>
-                        <div><i>Compound interest</i> adalah keajaiban ke-8 dunia. Konsistensi top-up dan return yang terukur akan melipatgandakan aset secara signifikan.</div>
+                        <div>Compound interest adalah keajaiban ke-8 dunia. Konsistensi top-up dan return terukur akan melipatgandakan aset secara signifikan.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 9. VALUASI SAHAM (PER & PBV) -->
+        <!-- 9. VALUASI -->
         <section id="panel-val" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -1115,7 +1139,7 @@
                         <label for="val-price">Harga Saham Saat Ini (Rp)</label>
                         <div class="input-group">
                             <span class="input-prefix">Rp</span>
-                            <input type="number" id="val-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                            <input type="text" inputmode="decimal" id="val-price" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcVal)">
                         </div>
                     </div>
                     <div class="form-row">
@@ -1123,19 +1147,18 @@
                             <label for="val-eps">Laba per Saham / EPS (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="val-eps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                                <input type="text" inputmode="decimal" id="val-eps" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcVal)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="val-bvps">Nilai Buku / BVPS (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="val-bvps" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcVal()">
+                                <input type="text" inputmode="decimal" id="val-bvps" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcVal)">
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Metrik Valuasi Pasar</span>
@@ -1164,64 +1187,7 @@
             </div>
         </section>
 
-        <!-- 2. BATAS ARA & ARB BEI -->
-        <section id="panel-ara" class="panel">
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-header-compact">
-                        <span class="card-title">2. Kalkulator ARA & ARB (BEI)</span>
-                    </div>
-                    <p class="card-desc">Batas Auto Rejection Atas & Bawah sesuai regulasi Bursa Efek Indonesia (asimetris).</p>
-                    <div class="form-group">
-                        <label for="ara-price">Harga Penutupan Kemarin / Closing (Rp)</label>
-                        <div class="input-group">
-                            <span class="input-prefix">Rp</span>
-                            <input type="number" id="ara-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcARA()">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ara-type">Jenis Pasar / Papan</label>
-                        <select id="ara-type" onchange="calcARA()" style="width:100%;padding:7px 8px;font-size:0.875rem;font-weight:600;color:var(--text-main);background-color:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);outline:none;">
-                            <option value="regular">Pasar Reguler (Papan Utama/Pengembangan/Ekonomi Baru)</option>
-                            <option value="ipo">Saham Baru IPO (Hari Pertama Perdagangan)</option>
-                            <option value="watch">Papan Pemantauan Khusus (Periodic Call Auction)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header-compact">
-                        <span class="card-title">Batas Rentang Harga Hari Ini</span>
-                        <span id="ara-badge" class="badge badge-gray">Belum Diisi</span>
-                    </div>
-                    <div class="metrics-grid" style="grid-template-columns: 1fr 1fr;">
-                        <div class="metric-card" style="border-left: 3px solid var(--green); background: var(--green-bg); padding: 10px;">
-                            <div class="metric-title" style="color: var(--green);">AUTO REJECTION ATAS (ARA)</div>
-                            <div class="metric-amount text-green" style="font-size: 1.3rem;" id="ara-out-ara">Rp 0</div>
-                            <span style="font-size: 0.7rem; color: var(--text-sub);" id="ara-pct-ara">Maksimal Kenaikan: +0,00%</span>
-                        </div>
-                        <div class="metric-card" style="border-left: 3px solid var(--red); background: var(--red-bg); padding: 10px;">
-                            <div class="metric-title" style="color: var(--red);">AUTO REJECTION BAWAH (ARB)</div>
-                            <div class="metric-amount text-red" style="font-size: 1.3rem;" id="ara-out-arb">Rp 0</div>
-                            <span style="font-size: 0.7rem; color: var(--text-sub);" id="ara-pct-arb">Maksimal Penurunan: -0,00%</span>
-                        </div>
-                    </div>
-                    <div class="note-box">
-                        <div class="note-head">Aturan Auto Rejection BEI (Asimetris)</div>
-                        <div id="ara-rules-note">
-                            <strong>Pasar Reguler:</strong><br>
-                            • Rp50–Rp200: ARA +35% | ARB −15%<br>
-                            • >Rp200–Rp5.000: ARA +25% | ARB −15%<br>
-                            • >Rp5.000: ARA +20% | ARB −15%<br><br>
-                            <strong>IPO Hari Pertama:</strong> Batas 2× lipat (ARA +70%/+50%/+40% | ARB −30%)<br>
-                            <strong>Papan Pemantauan:</strong> Simetris ±10% (harga min Rp1)
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 10. THEORETICAL RIGHT ISSUE (HMETD) -->
+        <!-- 10. RIGHT ISSUE -->
         <section id="panel-ri" class="panel">
             <div class="grid-2">
                 <div class="card">
@@ -1234,14 +1200,14 @@
                             <label for="ri-cum-price">Harga Cum Date (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="ri-cum-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRI()">
+                                <input type="text" inputmode="decimal" id="ri-cum-price" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcRI)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ri-exe-price">Harga Pelaksanaan (Rp)</label>
                             <div class="input-group">
                                 <span class="input-prefix">Rp</span>
-                                <input type="number" id="ri-exe-price" class="has-prefix" value="" placeholder="0" min="0" step="any" oninput="calcRI()">
+                                <input type="text" inputmode="decimal" id="ri-exe-price" class="has-prefix num-input" placeholder="0" oninput="formatAndCalc(this, calcRI)">
                             </div>
                         </div>
                     </div>
@@ -1249,20 +1215,19 @@
                         <div class="form-group">
                             <label for="ri-old-ratio">Rasio Saham Lama</label>
                             <div class="input-group">
-                                <input type="number" id="ri-old-ratio" class="has-suffix" value="" placeholder="0" min="1" step="1" oninput="calcRI()">
+                                <input type="text" inputmode="numeric" id="ri-old-ratio" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcRI)">
                                 <span class="input-suffix">Saham</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ri-new-ratio">Rasio Saham Baru</label>
                             <div class="input-group">
-                                <input type="number" id="ri-new-ratio" class="has-suffix" value="" placeholder="0" min="1" step="1" oninput="calcRI()">
-                                <span class="input-suffix"> Saham</span>
+                                <input type="text" inputmode="numeric" id="ri-new-ratio" class="has-suffix num-input" placeholder="0" oninput="formatAndCalc(this, calcRI)">
+                                <span class="input-suffix">Saham</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header-compact">
                         <span class="card-title">Perkiraan Harga Ex-Date</span>
@@ -1282,54 +1247,109 @@
         </section>
 
         <footer>
-            Fee standar: Beli 0,15% | Jual 0,25% (saham). ETF/Right/Warrant: Jual 0,15% (tanpa PPh). — Dibuat untuk investor yang menghargai perhitungan yang akurat
+            Fee standar: Beli 0,15% | Jual 0,25% (saham). ETF/Right/Warrant: Jual 0,15% (tanpa PPh).<br>
+            Aturan ARA/ARB BEI terbaru (Rp1–Rp10: ±Rp1) · Dibuat untuk investor yang menghargai perhitungan akurat
         </footer>
-
     </div>
 
-    <!-- BOTTOM NAVIGATION BAR -->
     <nav class="bottom-nav">
-        <button class="nav-item active" id="nav-gl" onclick="switchTab('panel-gl', 'nav-gl')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        <button class="nav-item active" id="nav-gl" onclick="switchTab('panel-gl','nav-gl')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             Gain/Loss
         </button>
-        <button class="nav-item" id="nav-ara" onclick="switchTab('panel-ara', 'nav-ara')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        <button class="nav-item" id="nav-ara" onclick="switchTab('panel-ara','nav-ara')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"/></svg>
             ARA/ARB
         </button>
-        <button class="nav-item" id="nav-tp" onclick="switchTab('panel-tp', 'nav-tp')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        <button class="nav-item" id="nav-tp" onclick="switchTab('panel-tp','nav-tp')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>
             Target/BEP
         </button>
-        <button class="nav-item" id="nav-avg" onclick="switchTab('panel-avg', 'nav-avg')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+        <button class="nav-item" id="nav-avg" onclick="switchTab('panel-avg','nav-avg')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
             Avg Down
         </button>
-        <button class="nav-item" id="nav-div" onclick="switchTab('panel-div', 'nav-div')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <button class="nav-item" id="nav-div" onclick="switchTab('panel-div','nav-div')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             Dividen
         </button>
-        <button class="nav-item" id="nav-ps" onclick="switchTab('panel-ps', 'nav-ps')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <button class="nav-item" id="nav-ps" onclick="switchTab('panel-ps','nav-ps')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Positioning
         </button>
     </nav>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // STRICT ZERO FALLBACK PARSER
+        // ===== NUMBER FORMATTER (Indonesian style) =====
+        function cleanNumber(str) {
+            if (!str) return '';
+            // Keep only digits and one decimal separator (comma or dot)
+            let cleaned = str.replace(/[^\d.,]/g, '');
+            // Convert comma to dot for parsing
+            cleaned = cleaned.replace(',', '.');
+            // Allow only one decimal point
+            const parts = cleaned.split('.');
+            if (parts.length > 2) {
+                cleaned = parts[0] + '.' + parts.slice(1).join('');
+            }
+            return cleaned;
+        }
+
+        function formatNumber(val) {
+            if (val === '' || val === null || val === undefined) return '';
+            const num = parseFloat(val);
+            if (isNaN(num)) return '';
+            // Indonesian format: 1.250.000,50
+            return num.toLocaleString('id-ID', {
+                maximumFractionDigits: 4,
+                minimumFractionDigits: 0
+            });
+        }
+
+        function formatAndCalc(el, calcFn) {
+            const cursorPos = el.selectionStart;
+            const oldLen = el.value.length;
+
+            // Clean input
+            let raw = cleanNumber(el.value);
+
+            // Format
+            if (raw === '' || raw === '.') {
+                el.value = '';
+            } else {
+                // Handle trailing decimal
+                const hasTrailingDecimal = raw.endsWith('.');
+                const num = parseFloat(raw);
+                if (!isNaN(num)) {
+                    let formatted = formatNumber(num);
+                    if (hasTrailingDecimal && !formatted.includes(',')) {
+                        formatted += ',';
+                    }
+                    el.value = formatted;
+                }
+            }
+
+            // Restore cursor roughly
+            const newLen = el.value.length;
+            const diff = newLen - oldLen;
+            const newPos = Math.max(0, cursorPos + diff);
+            el.setSelectionRange(newPos, newPos);
+
+            // Run calculation
+            if (typeof calcFn === 'function') calcFn();
+        }
+
+        // Parse value from formatted input
         function parseVal(id) {
             const el = document.getElementById(id);
             if (!el) return 0;
-            const valStr = el.value.trim();
-            if (valStr === '' || valStr === null || valStr === undefined) return 0;
-            const v = parseFloat(valStr);
+            const raw = cleanNumber(el.value);
+            const v = parseFloat(raw);
             return isNaN(v) ? 0 : v;
         }
 
-        // Indonesian Rupiah Formatter
         function formatIDR(val, showDecimals = false) {
-            const n = (isNaN(val) || val === null || !isFinite(val)) ? 0 : val;
+            const n = (isNaN(val) || !isFinite(val)) ? 0 : val;
             const decimals = showDecimals ? 2 : (n % 1 !== 0 ? 2 : 0);
             return 'Rp ' + Number(n).toLocaleString('id-ID', {
                 minimumFractionDigits: decimals,
@@ -1337,9 +1357,8 @@
             });
         }
 
-        // Percentage Formatter
         function formatPct(val, showSign = false) {
-            const n = (isNaN(val) || val === null || !isFinite(val)) ? 0 : val;
+            const n = (isNaN(val) || !isFinite(val)) ? 0 : val;
             const sign = (showSign && n > 0) ? '+' : '';
             return sign + Number(n).toLocaleString('id-ID', {
                 minimumFractionDigits: 2,
@@ -1347,30 +1366,29 @@
             }) + '%';
         }
 
-        // Side Drawer Toggle
+        // ===== DRAWER & TAB =====
+        const panels = ['panel-gl','panel-ara','panel-tp','panel-avg','panel-div','panel-ps','panel-rrr','panel-comp','panel-val','panel-ri'];
+        const navs = ['nav-gl','nav-ara','nav-tp','nav-avg','nav-div','nav-ps',null,null,null,null];
+
         function toggleDrawer() {
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('drawerOverlay');
-            drawer.classList.toggle('active');
-            overlay.classList.toggle('active');
+            document.getElementById('drawer').classList.toggle('active');
+            document.getElementById('drawerOverlay').classList.toggle('active');
         }
 
-        // Tab Switcher
         function switchTab(panelId, navId) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.drawer-item').forEach(b => b.classList.remove('active'));
 
-            const targetPanel = document.getElementById(panelId);
-            if (targetPanel) targetPanel.classList.add('active');
+            const target = document.getElementById(panelId);
+            if (target) target.classList.add('active');
 
             if (navId) {
-                const navBtn = document.getElementById(navId);
-                if (navBtn) navBtn.classList.add('active');
+                const btn = document.getElementById(navId);
+                if (btn) btn.classList.add('active');
             }
 
-            const drawerBtns = document.querySelectorAll('.drawer-item');
-            drawerBtns.forEach(btn => {
+            document.querySelectorAll('.drawer-item').forEach(btn => {
                 if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(panelId)) {
                     btn.classList.add('active');
                 }
@@ -1378,11 +1396,40 @@
 
             document.getElementById('drawer').classList.remove('active');
             document.getElementById('drawerOverlay').classList.remove('active');
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* 1. Gain / Loss Calculation (Net after fees) */
+        // ===== SWIPE =====
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const container = document.getElementById('mainContainer');
+
+        container.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        container.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) < 60) return;
+
+            const currentIdx = panels.findIndex(p => document.getElementById(p).classList.contains('active'));
+            if (currentIdx === -1) return;
+
+            let nextIdx;
+            if (diff < 0) nextIdx = Math.min(currentIdx + 1, panels.length - 1);
+            else nextIdx = Math.max(currentIdx - 1, 0);
+
+            if (nextIdx !== currentIdx) {
+                switchTab(panels[nextIdx], navs[nextIdx]);
+            }
+        }
+
+        // ===== CALCULATIONS (same as before) =====
         function calcGL() {
             const buy = parseVal('gl-buy');
             const cur = parseVal('gl-current');
@@ -1390,8 +1437,8 @@
 
             const buyFeeInput = document.getElementById('gl-buy-fee').value.trim();
             const sellFeeInput = document.getElementById('gl-sell-fee').value.trim();
-            const buyFeePct = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
-            const sellFeePct = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
+            const buyFeePct = (buyFeeInput === '' ? 0.15 : parseFloat(cleanNumber(buyFeeInput)) || 0) / 100;
+            const sellFeePct = (sellFeeInput === '' ? 0.25 : parseFloat(cleanNumber(sellFeeInput)) || 0) / 100;
 
             const shares = lots * 100;
             const grossBuy = buy * shares;
@@ -1417,7 +1464,7 @@
             const badge = document.getElementById('gl-badge');
             const note = document.getElementById('gl-note');
 
-            if (buy === 0 && cur === 0 && lots === 0) {
+            if (buy === 0 && cur === 0) {
                 hero.className = 'res-hero neutral';
                 nominalEl.className = 'res-val text-blue';
                 pctEl.className = 'res-sub text-blue';
@@ -1425,7 +1472,7 @@
                 pctEl.textContent = 'Persentase: 0,00%';
                 badge.className = 'badge badge-gray';
                 badge.textContent = 'Belum Diisi';
-                note.textContent = 'Default Fee: Beli 0,15% | Jual 0,25%. Untuk ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh). Masukkan data untuk menghitung net profit/rugi saldo.';
+                note.textContent = 'Default Fee: Beli 0,15% | Jual 0,25%. ETF/Right/Warrant: Fee Jual 0,15% (tanpa PPh).';
                 return;
             }
 
@@ -1456,13 +1503,108 @@
             }
         }
 
-        /* 3. Target Price & BEP Calculation */
+        function calcARA() {
+            const price = parseVal('ara-price');
+            const type = document.getElementById('ara-type').value;
+            const badge = document.getElementById('ara-badge');
+
+            if (price === 0) {
+                document.getElementById('ara-out-ara').textContent = 'Rp 0';
+                document.getElementById('ara-out-arb').textContent = 'Rp 0';
+                document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +0,00%';
+                document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -0,00%';
+                badge.className = 'badge badge-gray';
+                badge.textContent = 'Belum Diisi';
+                return;
+            }
+
+            let araPct = 0, arbPct = 0, araAbs = 0, arbAbs = 0;
+            let typeLabel = 'Reguler';
+            let useAbs = false;
+
+            if (type === 'watch') {
+                araPct = 0.10;
+                arbPct = 0.10;
+                typeLabel = 'Pemantauan ±10%';
+            } else if (type === 'ipo') {
+                if (price <= 10) {
+                    araPct = 0.70; arbPct = 0.30;
+                } else if (price <= 200) {
+                    araPct = 0.70; arbPct = 0.30;
+                } else if (price <= 5000) {
+                    araPct = 0.50; arbPct = 0.30;
+                } else {
+                    araPct = 0.40; arbPct = 0.30;
+                }
+                typeLabel = 'IPO Hari Pertama';
+            } else {
+                if (price >= 1 && price <= 10) {
+                    useAbs = true;
+                    araAbs = 1;
+                    arbAbs = 1;
+                    typeLabel = 'Reguler Rp1–10';
+                } else if (price <= 200) {
+                    araPct = 0.35;
+                    arbPct = 0.15;
+                    typeLabel = 'Reguler Rp11–200';
+                } else if (price <= 5000) {
+                    araPct = 0.25;
+                    arbPct = 0.15;
+                    typeLabel = 'Reguler >200–5.000';
+                } else {
+                    araPct = 0.20;
+                    arbPct = 0.15;
+                    typeLabel = 'Reguler >5.000';
+                }
+            }
+
+            let rawARA, rawARB;
+            if (useAbs) {
+                rawARA = price + araAbs;
+                rawARB = Math.max(1, price - arbAbs);
+            } else {
+                rawARA = price * (1 + araPct);
+                rawARB = price * (1 - arbPct);
+                if (type === 'watch' && rawARB < 1) rawARB = 1;
+            }
+
+            function roundTick(p, isUp) {
+                let tick = 1;
+                if (p < 200) tick = 1;
+                else if (p < 500) tick = 2;
+                else if (p < 2000) tick = 5;
+                else if (p < 5000) tick = 10;
+                else tick = 25;
+
+                if (isUp) return Math.floor(p / tick) * tick;
+                return Math.ceil(p / tick) * tick;
+            }
+
+            let araPrice = useAbs ? Math.round(rawARA) : roundTick(rawARA, true);
+            let arbPrice = useAbs ? Math.max(1, Math.round(rawARB)) : roundTick(rawARB, false);
+            if (arbPrice < 1) arbPrice = 1;
+
+            document.getElementById('ara-out-ara').textContent = formatIDR(araPrice);
+            document.getElementById('ara-out-arb').textContent = formatIDR(arbPrice);
+
+            if (useAbs) {
+                document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +Rp 1';
+                document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: −Rp 1';
+            } else {
+                document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +' + formatPct(araPct * 100);
+                document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: −' + formatPct(arbPct * 100);
+            }
+
+            badge.className = 'badge badge-green';
+            badge.textContent = typeLabel;
+        }
+
         function calcTP() {
             const buy = parseVal('tp-buy');
             const buyFeeInput = document.getElementById('tp-buy-fee').value.trim();
             const sellFeeInput = document.getElementById('tp-sell-fee').value.trim();
-            const buyFee = (buyFeeInput === '' ? 0.15 : parseFloat(buyFeeInput) || 0) / 100;
-            const sellFee = (sellFeeInput === '' ? 0.25 : parseFloat(sellFeeInput) || 0) / 100;
+            const buyFee = (buyFeeInput === '' ? 0.15 : parseFloat(cleanNumber(buyFeeInput)) || 0) / 100;
+            const sellFee = (sellFeeInput === '' ? 0.25 : parseFloat(cleanNumber(sellFeeInput)) || 0) / 100;
             const targetPct = parseVal('tp-target') / 100;
 
             const denominator = 1 - sellFee;
@@ -1474,7 +1616,6 @@
             document.getElementById('tp-label-target').textContent = 'HARGA TARGET PROFIT (' + formatPct(targetPct * 100, true) + ')';
         }
 
-        /* 4. Average Down / Up Calculation */
         let rowIdx = 0;
         function addAvgRow(defaultPrice = '', defaultLot = '') {
             rowIdx++;
@@ -1486,18 +1627,16 @@
                 <td>
                     <div class="input-group">
                         <span class="input-prefix">Rp</span>
-                        <input type="number" class="has-prefix row-price" value="${defaultPrice}" placeholder="0" min="0" step="any" oninput="calcAvg()">
+                        <input type="text" inputmode="decimal" class="has-prefix row-price num-input" value="${defaultPrice}" placeholder="0" oninput="formatAndCalc(this, calcAvg)">
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="number" class="has-suffix row-lots" value="${defaultLot}" placeholder="0" min="0" step="1" oninput="calcAvg()">
+                        <input type="text" inputmode="numeric" class="has-suffix row-lots num-input" value="${defaultLot}" placeholder="0" oninput="formatAndCalc(this, calcAvg)">
                         <span class="input-suffix">Lot</span>
                     </div>
                 </td>
-                <td class="row-total" style="font-weight:700; color:var(--text-main);">
-                    Rp 0
-                </td>
+                <td class="row-total" style="font-weight:700;">Rp 0</td>
                 <td style="text-align:center;">
                     <button class="btn-sm btn-danger" onclick="removeAvgRow('${tr.id}')">✕</button>
                 </td>
@@ -1517,24 +1656,21 @@
         }
 
         function reindexRows() {
-            const rows = document.querySelectorAll('#avg-tbody tr');
-            rows.forEach((r, idx) => {
+            document.querySelectorAll('#avg-tbody tr').forEach((r, idx) => {
                 r.cells[0].textContent = '#' + (idx + 1);
             });
         }
 
         function calcAvg() {
             const rows = document.querySelectorAll('#avg-tbody tr');
-            let totalLots = 0;
-            let totalVal = 0;
+            let totalLots = 0, totalVal = 0;
 
             rows.forEach(r => {
                 const priceEl = r.querySelector('.row-price');
                 const lotsEl = r.querySelector('.row-lots');
-                const price = priceEl ? (parseFloat(priceEl.value) || 0) : 0;
-                const lots = lotsEl ? (parseFloat(lotsEl.value) || 0) : 0;
+                const price = priceEl ? parseFloat(cleanNumber(priceEl.value)) || 0 : 0;
+                const lots = lotsEl ? parseFloat(cleanNumber(lotsEl.value)) || 0 : 0;
                 const rowVal = price * lots * 100;
-
                 r.querySelector('.row-total').textContent = formatIDR(rowVal);
                 totalLots += lots;
                 totalVal += rowVal;
@@ -1550,24 +1686,23 @@
 
             const status = document.getElementById('avg-out-status');
             if (totalLots > 0 && rows.length > 1) {
-                const firstPrice = parseFloat(rows[0].querySelector('.row-price').value) || 0;
+                const firstPrice = parseFloat(cleanNumber(rows[0].querySelector('.row-price').value)) || 0;
                 if (firstPrice > 0 && avgPrice < firstPrice) {
-                    status.textContent = 'Average Down: Rata-rata turun dari ' + formatIDR(firstPrice);
+                    status.textContent = 'Average Down dari ' + formatIDR(firstPrice);
                     status.className = 'res-sub text-green';
                 } else if (firstPrice > 0 && avgPrice > firstPrice) {
-                    status.textContent = 'Average Up: Rata-rata naik dari ' + formatIDR(firstPrice);
+                    status.textContent = 'Average Up dari ' + formatIDR(firstPrice);
                     status.className = 'res-sub text-blue';
                 } else {
                     status.textContent = 'Harga rata-rata konstan';
                     status.className = 'res-sub text-blue';
                 }
             } else {
-                status.textContent = 'Masukkan harga & lot untuk melihat hasil';
+                status.textContent = 'Masukkan harga & lot';
                 status.className = 'res-sub text-blue';
             }
         }
 
-        /* 5. Dividend Yield Calculation */
         function calcDiv() {
             const price = parseVal('div-price');
             const dps = parseVal('div-dps');
@@ -1597,12 +1732,12 @@
                 hero.className = 'res-hero profit';
                 badge.className = 'badge badge-green';
                 badge.textContent = 'Sangat Attraktif';
-                desc.textContent = 'Yield tinggi (>6%). Sangat potensial untuk dividend investor.';
+                desc.textContent = 'Yield tinggi (>6%). Sangat potensial.';
             } else if (yieldPct >= 3) {
                 hero.className = 'res-hero neutral';
                 badge.className = 'badge badge-gray';
                 badge.textContent = 'Moderat';
-                desc.textContent = 'Yield moderat (3%-6%). Sesuai standar rata-rata pasar.';
+                desc.textContent = 'Yield moderat (3%–6%).';
             } else {
                 hero.className = 'res-hero neutral';
                 badge.className = 'badge badge-gray';
@@ -1611,11 +1746,10 @@
             }
         }
 
-        /* 6. Position Sizing Calculation */
         function calcPS() {
             const capital = parseVal('ps-capital');
             const riskInput = document.getElementById('ps-risk').value.trim();
-            const riskPct = (riskInput === '' ? 2 : parseFloat(riskInput) || 0) / 100;
+            const riskPct = (riskInput === '' ? 2 : parseFloat(cleanNumber(riskInput)) || 0) / 100;
             const buy = parseVal('ps-buy');
             const sl = parseVal('ps-sl');
 
@@ -1623,13 +1757,9 @@
             const riskPerShare = buy > sl ? buy - sl : 0;
             const riskSharePct = buy > 0 ? (riskPerShare / buy) * 100 : 0;
 
-            let maxShares = 0;
-            let maxLots = 0;
-            let totalBuyVal = 0;
-            let portPct = 0;
-
+            let maxLots = 0, totalBuyVal = 0, portPct = 0;
             if (riskPerShare > 0 && capital > 0) {
-                maxShares = Math.floor(maxRiskAmt / riskPerShare);
+                const maxShares = Math.floor(maxRiskAmt / riskPerShare);
                 maxLots = Math.floor(maxShares / 100);
                 totalBuyVal = maxLots * 100 * buy;
                 portPct = capital > 0 ? (totalBuyVal / capital) * 100 : 0;
@@ -1648,7 +1778,7 @@
                 badge.className = 'badge badge-red';
                 badge.textContent = 'Over-Leverage';
             } else if (portPct > 50) {
-                badge.className = 'badge badge-gray';
+                badge.className = 'badge badge-amber';
                 badge.textContent = 'Konsentrasi Tinggi';
             } else {
                 badge.className = 'badge badge-green';
@@ -1656,7 +1786,6 @@
             }
         }
 
-        /* 7. Risk-to-Reward Ratio (RRR) Calculation */
         function calcRRR() {
             const buy = parseVal('rrr-buy');
             const sl = parseVal('rrr-sl');
@@ -1664,13 +1793,11 @@
 
             const riskShare = buy > sl ? buy - sl : 0;
             const rewardShare = tp > buy ? tp - buy : 0;
-
             const riskPct = buy > 0 ? (riskShare / buy) * 100 : 0;
             const rewardPct = buy > 0 ? (rewardShare / buy) * 100 : 0;
-
             const rrr = riskShare > 0 ? rewardShare / riskShare : 0;
 
-            document.getElementById('rrr-out-risk').textContent = formatIDR(riskShare) + ' (-' + formatPct(riskPct) + ')';
+            document.getElementById('rrr-out-risk').textContent = formatIDR(riskShare) + ' (−' + formatPct(riskPct) + ')';
             document.getElementById('rrr-out-reward').textContent = formatIDR(rewardShare) + ' (+' + formatPct(rewardPct) + ')';
             document.getElementById('rrr-out-ratio').textContent = '1 : ' + Number(rrr).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -1693,27 +1820,26 @@
                 hero.className = 'res-hero profit';
                 ratioEl.className = 'res-val text-green';
                 statusEl.className = 'res-sub text-green';
-                statusEl.textContent = 'Potensi Profit ' + Number(rrr).toFixed(1) + 'x Lipat Risiko (Sangat Layak)';
+                statusEl.textContent = 'Potensi Profit ' + Number(rrr).toFixed(1) + '× Lipat Risiko (Sangat Layak)';
                 badge.className = 'badge badge-green';
                 badge.textContent = 'Sangat Ideal';
             } else if (rrr >= 1) {
                 hero.className = 'res-hero neutral';
                 ratioEl.className = 'res-val text-blue';
                 statusEl.className = 'res-sub text-blue';
-                statusEl.textContent = 'Potensi Profit Moderat (1 : ' + Number(rrr).toFixed(1) + ')';
+                statusEl.textContent = 'Potensi Profit Moderat';
                 badge.className = 'badge badge-gray';
                 badge.textContent = 'Cukup / Moderat';
             } else {
                 hero.className = 'res-hero loss';
                 ratioEl.className = 'res-val text-red';
                 statusEl.className = 'res-sub text-red';
-                statusEl.textContent = 'Risiko Lebih Besar dari Potensi Profit (Tidak Disarankan)';
+                statusEl.textContent = 'Risiko Lebih Besar dari Potensi Profit';
                 badge.className = 'badge badge-red';
                 badge.textContent = 'Risiko Tinggi';
             }
         }
 
-        /* 8. Compound Capital Projections */
         function calcComp() {
             const init = parseVal('comp-init');
             const monthly = parseVal('comp-add');
@@ -1742,7 +1868,6 @@
             document.getElementById('comp-out-interest').textContent = formatIDR(compoundInterest);
         }
 
-        /* 9. Valuation (PER & PBV) Calculation */
         function calcVal() {
             const price = parseVal('val-price');
             const eps = parseVal('val-eps');
@@ -1771,109 +1896,15 @@
             if (per > 0 && per <= 10) {
                 badge.className = 'badge badge-green';
                 badge.textContent = 'Murah / Undervalued';
-            } else if (per > 10 && per <= 20) {
+            } else if (per <= 20) {
                 badge.className = 'badge badge-gray';
                 badge.textContent = 'Wajar / Fair';
-            } else if (per > 20) {
+            } else {
                 badge.className = 'badge badge-red';
                 badge.textContent = 'Mahal / Overvalued';
-            } else {
-                badge.className = 'badge badge-gray';
-                badge.textContent = 'Belum Diisi';
             }
         }
 
-        /* 2. ARA & ARB Calculation (BEI Rules - Asymmetric) */
-        function calcARA() {
-            const price = parseVal('ara-price');
-            const type = document.getElementById('ara-type') ? document.getElementById('ara-type').value : 'regular';
-            const badge = document.getElementById('ara-badge');
-            const rulesNote = document.getElementById('ara-rules-note');
-
-            if (price === 0) {
-                document.getElementById('ara-out-ara').textContent = 'Rp 0';
-                document.getElementById('ara-out-arb').textContent = 'Rp 0';
-                document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +0,00%';
-                document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -0,00%';
-                badge.className = 'badge badge-gray';
-                badge.textContent = 'Belum Diisi';
-                return;
-            }
-
-            let araPct = 0.20;
-            let arbPct = 0.15;
-            let typeLabel = 'Reguler';
-
-            if (type === 'watch') {
-                // Papan Pemantauan Khusus - Simetris ±10%
-                araPct = 0.10;
-                arbPct = 0.10;
-                typeLabel = 'Pemantauan ±10%';
-            } else if (type === 'ipo') {
-                // IPO Hari Pertama - 2x lipat
-                if (price >= 50 && price <= 200) {
-                    araPct = 0.70;
-                    arbPct = 0.30;
-                } else if (price > 200 && price <= 5000) {
-                    araPct = 0.50;
-                    arbPct = 0.30;
-                } else {
-                    araPct = 0.40;
-                    arbPct = 0.30;
-                }
-                typeLabel = 'IPO Hari Pertama';
-            } else {
-                // Pasar Reguler - Asimetris
-                if (price >= 50 && price <= 200) {
-                    araPct = 0.35;
-                    arbPct = 0.15;
-                } else if (price > 200 && price <= 5000) {
-                    araPct = 0.25;
-                    arbPct = 0.15;
-                } else {
-                    araPct = 0.20;
-                    arbPct = 0.15;
-                }
-                typeLabel = 'Reguler';
-            }
-
-            // Harga minimum untuk ARB di papan pemantauan
-            let rawARA = price * (1 + araPct);
-            let rawARB = price * (1 - arbPct);
-            if (type === 'watch' && rawARB < 1) rawARB = 1;
-
-            function roundTick(p, isUp) {
-                let tick = 1;
-                if (p < 200) tick = 1;
-                else if (p < 500) tick = 2;
-                else if (p < 2000) tick = 5;
-                else if (p < 5000) tick = 10;
-                else tick = 25;
-
-                // Pembulatan ke fraksi terdekat sesuai arah
-                if (isUp) {
-                    return Math.floor(p / tick) * tick;
-                } else {
-                    return Math.ceil(p / tick) * tick;
-                }
-            }
-
-            let araPrice = roundTick(rawARA, true);
-            let arbPrice = roundTick(rawARB, false);
-
-            // Pastikan ARB tidak di bawah 1 untuk watchlist
-            if (type === 'watch' && arbPrice < 1) arbPrice = 1;
-
-            document.getElementById('ara-out-ara').textContent = formatIDR(araPrice);
-            document.getElementById('ara-out-arb').textContent = formatIDR(arbPrice);
-            document.getElementById('ara-pct-ara').textContent = 'Maksimal Kenaikan: +' + formatPct(araPct * 100);
-            document.getElementById('ara-pct-arb').textContent = 'Maksimal Penurunan: -' + formatPct(arbPct * 100);
-
-            badge.className = 'badge badge-green';
-            badge.textContent = typeLabel + ' (ARA +' + (araPct * 100) + '% / ARB -' + (arbPct * 100) + '%)';
-        }
-
-        /* 10. Right Issue Theoretical Price (HMETD) */
         function calcRI() {
             const cumPrice = parseVal('ri-cum-price');
             const exePrice = parseVal('ri-exe-price');
@@ -1903,9 +1934,9 @@
             hero.className = 'res-hero profit';
         }
 
-        // Initialize default empty state on DOM Load
+        // ===== INIT =====
         window.addEventListener('DOMContentLoaded', () => {
-            addAvgRow('', '');
+            addAvgRow();
             calcGL();
             calcTP();
             calcDiv();
