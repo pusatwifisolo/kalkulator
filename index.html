@@ -1189,13 +1189,13 @@ footer {
 </nav>
 
 <script>
-// ===== NUMBER FORMATTER (FIXED - unlimited digits) =====
+// ===== NUMBER FORMATTER (Comma as thousand separator) =====
 function cleanNumber(str) {
     if (!str) return '';
-    // Hanya izinkan digit dan satu koma/titik desimal
+    // Hanya izinkan digit dan satu titik/koma desimal
     let cleaned = str.replace(/[^\d.,]/g, '');
-    // Ubah koma jadi titik untuk parsing
-    cleaned = cleaned.replace(/,/g, '.');
+    // Ubah koma jadi titik sementara untuk parsing
+    cleaned = cleaned.replace(/,/g, '');
     // Hanya satu titik desimal yang diizinkan
     const parts = cleaned.split('.');
     if (parts.length > 2) {
@@ -1206,25 +1206,22 @@ function cleanNumber(str) {
 
 function formatNumber(val) {
     if (val === '' || val === null || val === undefined) return '';
-    const num = parseFloat(val);
-    if (isNaN(num)) return '';
-
+    
     // Pisahkan integer dan decimal
     const str = String(val);
     const hasDecimal = str.includes('.');
-    const [intPart, decPart] = str.split('.');
+    let [intPart, decPart] = str.split('.');
 
-    // Format bagian integer dengan titik pemisah ribuan
-    const formattedInt = Number(intPart).toLocaleString('id-ID');
+    // Format bagian integer dengan koma sebagai pemisah ribuan
+    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     if (hasDecimal) {
-        return formattedInt + ',' + (decPart || '');
+        return intPart + '.' + (decPart || '');
     }
-    return formattedInt;
+    return intPart;
 }
 
 function formatAndCalc(el, calcFn) {
-    // Simpan posisi cursor berdasarkan jumlah digit sebelum cursor
     const oldValue = el.value;
     const cursorPos = el.selectionStart;
 
@@ -1234,19 +1231,17 @@ function formatAndCalc(el, calcFn) {
         if (/\d/.test(oldValue[i])) digitsBeforeCursor++;
     }
 
-    // Bersihkan input
     let raw = cleanNumber(el.value);
 
     if (raw === '' || raw === '.') {
         el.value = '';
         el.classList.remove('has-value');
     } else {
-        // Format ulang
         const formatted = formatNumber(raw);
         el.value = formatted;
         el.classList.add('has-value');
 
-        // Kembalikan cursor ke posisi yang benar berdasarkan jumlah digit
+        // Kembalikan cursor berdasarkan jumlah digit
         let newCursorPos = 0;
         let digitCount = 0;
         for (let i = 0; i < formatted.length; i++) {
@@ -1270,7 +1265,6 @@ function formatAndCalc(el, calcFn) {
         } catch (e) {}
     }
 
-    // Jalankan perhitungan
     if (typeof calcFn === 'function') calcFn();
 }
 
